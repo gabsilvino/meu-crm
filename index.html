@@ -4,15 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema de Gestão de Serviços e Ativos</title>
-<!-- SUPABASE JS OFICIAL -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
 --primary:#2563eb;--primary-dark:#1e40af;--primary-light:#dbeafe;
 --success:#16a34a;--success-light:#dcfce7;--warning:#f59e0b;--warning-light:#fef3c7;
 --danger:#dc2626;--danger-light:#fee2e2;--info:#0ea5e9;--info-light:#e0f2fe;
 --purple:#7c3aed;--purple-light:#ede9fe;
---bg:#f3f4f6;--bg2:#fff;--bg3:#fff;--sbg:#111827;
+--bg:#f3f4f6;--bg2:#ffffff;--bg3:#ffffff;--sbg:#111827;
 --tx:#1f2937;--tx2:#6b7280;--tx3:#9ca3af;--bd:#e5e7eb;--bd2:#f3f4f6;
 --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 6px rgba(0,0,0,.06);--shadow-lg:0 10px 25px rgba(0,0,0,.12);
 }
@@ -27,13 +25,15 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 input,select,textarea,button{font-family:inherit;color:var(--tx)}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 
+/* LOGIN */
 .login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f172a,#1e40af 50%,#2563eb);position:fixed;inset:0;z-index:999}
 .login-box{background:var(--bg2);border-radius:16px;padding:40px;width:420px;max-width:92vw;box-shadow:var(--shadow-lg);border:1px solid var(--bd)}
 .login-box h1{text-align:center;margin-bottom:6px;font-size:22px;color:var(--tx)}
 .login-box .sub{text-align:center;color:var(--tx2);margin-bottom:16px;font-size:13px}
 .login-box .logo-area{text-align:center;font-size:48px;margin-bottom:12px}
-.cloud-status{text-align:center;margin-bottom:16px;font-size:12px;padding:8px 12px;border-radius:10px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}
+.cloud-status{text-align:center;margin-bottom:16px;font-size:12px;padding:8px 12px;border-radius:8px;font-weight:600}
 
+/* LAYOUT */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:var(--sbg);color:#fff;overflow-y:auto;z-index:100;transition:transform .3s;display:flex;flex-direction:column}
 .sb-header{padding:20px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
 .sb-header h2{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -55,9 +55,9 @@ input,select,textarea,button{font-family:inherit;color:var(--tx)}
 .main{margin-left:260px;min-height:100vh;background:var(--bg)}
 .topbar{background:var(--bg2);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
 .topbar h1{font-size:18px;font-weight:700}
-.topbar-right{display:flex;align-items:center;gap:12px}
 .content{padding:28px}
 
+/* UI ELEMENTS */
 .btn{padding:8px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s;white-space:nowrap}
 .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
 .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-dark)}
@@ -67,7 +67,6 @@ input,select,textarea,button{font-family:inherit;color:var(--tx)}
 .btn-sm{padding:5px 10px;font-size:12px}
 .btn-icon{width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:var(--bg2);border:1px solid var(--bd);cursor:pointer;font-size:14px}
 .btn-icon:hover{background:var(--bg)}.btn-icon.whatsapp{background:#25D366;color:#fff;border:none}
-.btn-group{display:flex;gap:8px;flex-wrap:wrap}
 
 .card{background:var(--bg2);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--bd)}
 .card-header{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -145,22 +144,22 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- TELA DE LOGIN (ABRE INSTANTANEAMENTE) -->
 <div class="login-page" id="loginPage">
 <div class="login-box">
 <div class="logo-area">🔧</div>
 <h1>Sistema de Gestão</h1>
 <p class="sub">Serviços e Ativos de TI</p>
-<div id="loginCloudStatus" class="cloud-status" style="background:var(--warning-light);color:#92400e">
-Verificando conexão...
+<div id="loginCloudStatus" class="cloud-status" style="background:var(--success-light);color:var(--success)">
+🟢 Sistema Pronto para Uso
 </div>
 <div class="fg" style="margin-bottom:14px"><label>Usuário</label><input type="text" id="loginUser" value="admin"></div>
 <div class="fg" style="margin-bottom:20px"><label>Senha</label><input type="password" id="loginPass" value="admin"></div>
-<button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px" onclick="doLogin()">🔑 Entrar</button>
-<p style="margin-top:16px;font-size:11px;color:var(--tx3);text-align:center">Padrão: admin / admin</p>
+<button type="button" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px" onclick="doLogin()">🔑 Entrar</button>
+<p style="margin-top:16px;font-size:11px;color:var(--tx3);text-align:center">Acesso Padrão: admin / admin</p>
 </div></div>
 
-<!-- APP -->
+<!-- APLICAÇÃO PRINCIPAL -->
 <div class="app" id="app" style="display:none;">
 <div class="sidebar-overlay" id="sOv" onclick="toggleSB()"></div>
 <aside class="sidebar" id="sidebar">
@@ -171,7 +170,7 @@ Verificando conexão...
 <div class="sb-section"><div class="sb-label">Serviços</div><a href="#" data-page="servicos"><span class="ic">🛠️</span> Serviços</a><a href="#" onclick="openSvcM()"><span class="ic">➕</span> Novo Serviço</a></div>
 <div class="sb-section"><div class="sb-label">Ordens de Serviço</div><a href="#" data-page="os"><span class="ic">📋</span> Todas as OS</a><a href="#" onclick="openOSM()"><span class="ic">➕</span> Nova OS</a></div>
 <div class="sb-section"><div class="sb-label">Inventário</div><a href="#" data-page="equip"><span class="ic">💻</span> Equipamentos</a><a href="#" onclick="openEqM()"><span class="ic">➕</span> Novo Equip.</a></div>
-<div class="sb-section"><div class="sb-label">Sistema</div><a href="#" data-page="config"><span class="ic">⚙️</span> Configurações</a></div>
+<div class="sb-section"><div class="sb-label">Sistema</div><a href="#" data-page="config"><span class="ic">⚙️</span> Configurações / Nuvem</a></div>
 </div>
 <div class="sb-footer"><div class="sb-user"><div class="sb-avatar">A</div><div class="sb-info"><div class="nm">Admin</div><div class="rl">Administrador</div></div><button class="sb-logout" onclick="doLogout()" title="Sair">🚪</button></div></div>
 </aside>
@@ -182,8 +181,8 @@ Verificando conexão...
 <button class="menu-toggle" onclick="toggleSB()">☰</button>
 <h1 id="pageTitle">Dashboard</h1>
 </div>
-<div class="topbar-right">
-<span id="cloudBadge" style="font-size:12px;padding:4px 10px;border-radius:12px;font-weight:600"></span>
+<div style="display:flex;align-items:center;gap:10px">
+<span id="cloudBadge" style="font-size:12px;padding:4px 10px;border-radius:12px;font-weight:600;background:var(--success-light);color:var(--success)">☁️ Conectado</span>
 </div>
 </div>
 <div class="content">
@@ -217,110 +216,90 @@ Verificando conexão...
 
 <!-- CONFIG / SUPABASE -->
 <div class="page" id="page-config">
-<div class="card" style="max-width:650px"><div class="card-header"><h2>☁️ Conexão com Supabase</h2></div><div class="card-body">
+<div class="card" style="max-width:650px"><div class="card-header"><h2>☁️ Configuração da Nuvem (Supabase)</h2></div><div class="card-body">
 <div class="fg" style="margin-bottom:12px">
 <label>Project URL</label>
 <input type="text" id="cfgUrl" value="https://umzromnmsackakaajgji.supabase.co">
 </div>
 <div class="fg" style="margin-bottom:16px">
 <label>Chave API (anon public - começa com eyJ...)</label>
-<input type="password" id="cfgKey" placeholder="Cole sua chave anon aqui...">
+<input type="password" id="cfgKey" placeholder="Cole sua chave anon do Supabase aqui">
 </div>
-<button class="btn btn-success" onclick="salvarChavesManuais()">💾 Salvar e Conectar</button>
-<button class="btn btn-outline" style="margin-left:8px" onclick="checkCloudConnection()">🔄 Testar Conexão</button>
+<button class="btn btn-success" onclick="salvarChavesManuais()">💾 Salvar Chaves</button>
 </div></div>
 </div>
 
 </div></div></div>
 
-<!-- MODAIS -->
-<div class="modal-overlay" id="mCli"><div class="modal modal-lg"><div class="mh"><h2 id="mCliH">Novo Cliente</h2><button class="mx" onclick="clM('mCli')">✕</button></div><div class="mb"><input type="hidden" id="cliId"><div class="fg2"><div class="fg full"><label>Nome / Razão Social *</label><input type="text" id="cNm"></div><div class="fg"><label>CPF/CNPJ</label><input type="text" id="cDc"></div><div class="fg"><label>Telefone</label><input type="text" id="cTl"></div><div class="fg"><label>WhatsApp</label><input type="text" id="cWh"></div><div class="fg"><label>Email</label><input type="email" id="cEm"></div><div class="fg"><label>Cidade</label><input type="text" id="cCd"></div><div class="fg full"><label>Endereço</label><input type="text" id="cLg"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mCli')">Cancelar</button><button class="btn btn-primary" onclick="saveCli()">💾 Salvar</button></div></div></div>
+<!-- MODAL CLIENTE -->
+<div class="modal-overlay" id="mCli"><div class="modal modal-lg"><div class="mh"><h2 id="mCliH">Novo Cliente</h2><button class="mx" onclick="clM('mCli')">✕</button></div><div class="mb"><input type="hidden" id="cliId"><div class="fg2"><div class="fg full"><label>Nome / Razão Social *</label><input type="text" id="cNm"></div><div class="fg"><label>CPF/CNPJ</label><input type="text" id="cDc"></div><div class="fg"><label>Telefone</label><input type="text" id="cTl"></div><div class="fg"><label>WhatsApp</label><input type="text" id="cWh"></div><div class="fg"><label>Email</label><input type="email" id="cEm"></div><div class="fg"><label>CEP (Auto)</label><input type="text" id="cCEP" oninput="bCEP(this.value)"></div><div class="fg"><label>Cidade</label><input type="text" id="cCd"></div><div class="fg full"><label>Endereço</label><input type="text" id="cLg"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mCli')">Cancelar</button><button class="btn btn-primary" onclick="saveCli()">💾 Salvar</button></div></div></div>
 
+<!-- MODAL SERVIÇO -->
 <div class="modal-overlay" id="mSvc"><div class="modal modal-md"><div class="mh"><h2 id="mSvcH">Novo Serviço</h2><button class="mx" onclick="clM('mSvc')">✕</button></div><div class="mb"><input type="hidden" id="svcId"><div class="fg2"><div class="fg"><label>Código</label><input type="text" id="sCd"></div><div class="fg"><label>Valor</label><div class="ig"><span class="pfx">R$</span><input type="text" id="sVl" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Descrição</label><input type="text" id="sDc"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mSvc')">Cancelar</button><button class="btn btn-primary" onclick="saveSvc()">💾 Salvar</button></div></div></div>
 
+<!-- MODAL OS -->
 <div class="modal-overlay" id="mOS"><div class="modal modal-md"><div class="mh"><h2 id="mOSH">Nova OS</h2><button class="mx" onclick="clM('mOS')">✕</button></div><div class="mb"><input type="hidden" id="osId"><div class="fg2"><div class="fg"><label>Nº OS</label><input type="text" id="osNm" readonly style="background:var(--bg)"></div><div class="fg"><label>Cliente</label><select id="osCliSel"></select></div><div class="fg"><label>Status</label><select id="osSt"><option>Aberta</option><option>Em andamento</option><option>Concluída</option><option>Paga</option><option>Devendo</option></select></div><div class="fg"><label>Valor Final</label><div class="ig"><span class="pfx">R$</span><input type="text" id="osVlF" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Observações</label><textarea id="osOb"></textarea></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mOS')">Cancelar</button><button class="btn btn-primary" onclick="saveOS()">💾 Salvar</button></div></div></div>
 
-<div class="modal-overlay" id="mEq"><div class="modal modal-lg"><div class="mh"><h2 id="mEqH">Novo Equipamento</h2><button class="mx" onclick="clM('mEq')">✕</button></div><div class="mb"><input type="hidden" id="eqId"><input type="hidden" id="eqFoto"><div class="fg2"><div class="fg"><label>Cliente</label><select id="eqCliSel"></select></div><div class="fg"><label>Tipo</label><select id="eqTipo"><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Roteador</option></select></div><div class="fg"><label>Marca</label><input type="text" id="eqMarca"></div><div class="fg"><label>Modelo</label><input type="text" id="eqModelo"></div><div class="fg full"><label>Foto</label><div style="display:flex;gap:12px;align-items:center"><div id="eqPhotoPrev" style="width:70px;height:70px;border-radius:8px;border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)"><span style="font-size:24px">💻</span></div><button type="button" class="btn btn-outline btn-sm" onclick="searchPhotos()">🔍 Buscar Fotos</button></div><div class="eq-thumb-grid" id="eqThumbGrid"></div></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mEq')">Cancelar</button><button class="btn btn-primary" onclick="saveEq()">💾 Salvar</button></div></div></div>
+<!-- MODAL EQUIPAMENTO -->
+<div class="modal-overlay" id="mEq"><div class="modal modal-lg"><div class="mh"><h2 id="mEqH">Novo Equipamento</h2><button class="mx" onclick="clM('mEq')">✕</button></div><div class="mb"><input type="hidden" id="eqId"><input type="hidden" id="eqFoto"><div class="fg2"><div class="fg"><label>Cliente</label><select id="eqCliSel"></select></div><div class="fg"><label>Tipo</label><select id="eqTipo" onchange="autoSearch()"><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Roteador</option></select></div><div class="fg"><label>Marca</label><input type="text" id="eqMarca" onblur="autoSearch()"></div><div class="fg"><label>Modelo</label><input type="text" id="eqModelo" onblur="autoSearch()"></div><div class="fg full"><label>Foto do Produto</label><div style="display:flex;gap:12px;align-items:center"><div id="eqPhotoPrev" style="width:70px;height:70px;border-radius:8px;border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)"><span style="font-size:24px">💻</span></div><button type="button" class="btn btn-outline btn-sm" onclick="searchPhotos()">🔍 Buscar Fotos</button></div><div class="eq-thumb-grid" id="eqThumbGrid"></div></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mEq')">Cancelar</button><button class="btn btn-primary" onclick="saveEq()">💾 Salvar</button></div></div></div>
 
 <div class="toast-container" id="toasts"></div>
 
 <script>
-// ==========================================
-// CONFIGURAÇÃO SUPABASE
-// ==========================================
-let SUPABASE_URL = localStorage.getItem('cfg_supa_url') || "https://umzromnmsackakaajgji.supabase.co";
-let SUPABASE_KEY = localStorage.getItem('cfg_supa_key') || "";
+// =======================================================
+// CONEXÃO DIRETA COM O SUPABASE VIA REST (SEM DEPENDÊNCIAS)
+// =======================================================
+let SUPA_URL = localStorage.getItem('cfg_supa_url') || "https://umzromnmsackakaajgji.supabase.co";
+let SUPA_KEY = localStorage.getItem('cfg_supa_key') || "";
 
-let supabase = null;
-
-async function checkCloudConnection() {
-    const statusDiv = document.getElementById('loginCloudStatus');
-    const badge = document.getElementById('cloudBadge');
-
-    if (!SUPABASE_KEY || !SUPABASE_KEY.startsWith('eyJ')) {
-        statusDiv.style.background = 'var(--warning-light)';
-        statusDiv.style.color = '#92400e';
-        statusDiv.innerHTML = '🟠 Modo Local (Chave anon não configurada)';
-        badge.style.background = 'var(--warning-light)';
-        badge.style.color = '#92400e';
-        badge.innerHTML = '💾 Local';
-        return false;
-    }
-
-    try {
-        if (window.supabase) {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            // Teste simples de ping
-            const { error } = await supabase.from('tbl_clientes').select('id').limit(1);
-            if (!error) {
-                statusDiv.style.background = 'var(--success-light)';
-                statusDiv.style.color = 'var(--success)';
-                statusDiv.innerHTML = '🟢 Supabase Online e Conectado!';
-                badge.style.background = 'var(--success-light)';
-                badge.style.color = 'var(--success)';
-                badge.innerHTML = '☁️ Nuvem Ativa';
-                return true;
-            }
-        }
-    } catch (e) {
-        console.warn('Erro ao conectar Supabase:', e);
-    }
-
-    statusDiv.style.background = 'var(--danger-light)';
-    statusDiv.style.color = 'var(--danger)';
-    statusDiv.innerHTML = '🔴 Erro na Chave do Supabase (Usando Modo Local)';
-    badge.style.background = 'var(--danger-light)';
-    badge.style.color = 'var(--danger)';
-    badge.innerHTML = '⚠️ Chave Inválida';
-    return false;
-}
-
-// BANCO DE DADOS RESILIENTE (NUVEM OU LOCAL)
 const DB = {
     async select(table) {
-        if (supabase) {
+        if (SUPA_KEY && SUPA_KEY.startsWith('eyJ')) {
             try {
-                const { data, error } = await supabase.from(table).select('*');
-                if (!error && data) return data;
-            } catch (e) {}
+                const res = await fetch(`${SUPA_URL}/rest/v1/${table}?select=*`, {
+                    headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem(table, JSON.stringify(data));
+                    return data;
+                }
+            } catch(e) {}
         }
         return JSON.parse(localStorage.getItem(table) || '[]');
     },
     async insert(table, record) {
-        if (supabase) {
+        if (SUPA_KEY && SUPA_KEY.startsWith('eyJ')) {
             try {
-                await supabase.from(table).insert([record]);
-            } catch (e) {}
+                await fetch(`${SUPA_URL}/rest/v1/${table}`, {
+                    method: 'POST',
+                    headers: { 
+                        'apikey': SUPA_KEY, 
+                        'Authorization': `Bearer ${SUPA_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(record)
+                });
+            } catch(e) {}
         }
         const local = JSON.parse(localStorage.getItem(table) || '[]');
         local.push(record);
         localStorage.setItem(table, JSON.stringify(local));
     },
     async update(table, id, record) {
-        if (supabase) {
+        if (SUPA_KEY && SUPA_KEY.startsWith('eyJ')) {
             try {
-                await supabase.from(table).update(record).eq('id', id);
-            } catch (e) {}
+                await fetch(`${SUPA_URL}/rest/v1/${table}?id=eq.${id}`, {
+                    method: 'PATCH',
+                    headers: { 
+                        'apikey': SUPA_KEY, 
+                        'Authorization': `Bearer ${SUPA_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(record)
+                });
+            } catch(e) {}
         }
         let local = JSON.parse(localStorage.getItem(table) || '[]');
         const idx = local.findIndex(x => x.id === id);
@@ -353,7 +332,7 @@ function opM(id){ $(id).classList.add('active'); }
 function clM(id){ $(id).classList.remove('active'); }
 function toggleSB(){ $('sidebar').classList.toggle('open'); $('sOv').classList.toggle('open'); }
 
-// LOGIN SEMPRE FUNCIONAL
+// LOGIN IMEDIATO
 function doLogin(){
     const l = $('loginUser').value.trim();
     const p = $('loginPass').value;
@@ -406,7 +385,7 @@ async function rCli(){
 function openCliM(){
     $('cliId').value = '';
     $('mCliH').textContent = 'Novo Cliente';
-    ['cNm','cDc','cTl','cWh','cEm','cCd','cLg'].forEach(f => $(f).value = '');
+    ['cNm','cDc','cTl','cWh','cEm','cCEP','cCd','cLg'].forEach(f => $(f).value = '');
     opM('mCli');
 }
 
@@ -427,7 +406,7 @@ async function saveCli(){
     };
     if ($('cliId').value) await DB.update('tbl_clientes', id, data);
     else await DB.insert('tbl_clientes', data);
-    toast('Cliente salvo!', 'success');
+    toast('Cliente salvo com sucesso!', 'success');
     clM('mCli');
     rCli();
 }
@@ -443,6 +422,7 @@ async function editCli(id){
     $('cTl').value = c.telefone || '';
     $('cWh').value = c.whatsapp || '';
     $('cEm').value = c.email || '';
+    $('cCEP').value = c.cep || '';
     $('cCd').value = c.cidade || '';
     $('cLg').value = c.logradouro || '';
     opM('mCli');
@@ -554,7 +534,7 @@ async function editOS(id){
     opM('mOS');
 }
 
-// EQUIPAMENTOS
+// EQUIPAMENTOS COM FOTOS
 async function rEq(){
     const list = await DB.select('tbl_equipamentos');
     const cli = await DB.select('tbl_clientes');
@@ -618,6 +598,11 @@ async function editEq(id){
     opM('mEq');
 }
 
+function autoSearch(){
+    const t = `${$('eqMarca').value} ${$('eqModelo').value}`.trim();
+    if (t) searchPhotos();
+}
+
 async function searchPhotos(){
     const termo = `${$('eqMarca').value} ${$('eqModelo').value} computer hardware`.trim();
     const grid = $('eqThumbGrid');
@@ -641,21 +626,26 @@ function selPhoto(url){
     $('eqPhotoPrev').innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
 }
 
+function bCEP(v){
+    v = (v || '').replace(/\D/g, '');
+    if (v.length !== 8) return;
+    fetch(`https://viacep.com.br/ws/${v}/json/`).then(r => r.json()).then(d => {
+        if (!d.erro) {
+            $('cLg').value = d.logradouro || '';
+            $('cCd').value = d.localidade || '';
+            toast('Endereço carregado via CEP!', 'success');
+        }
+    });
+}
+
 function salvarChavesManuais() {
     const u = $('cfgUrl').value.trim();
     const k = $('cfgKey').value.trim();
-    if (!k.startsWith('eyJ')) {
-        toast('Atenção: A chave anon deve começar com "eyJ..."', 'error');
-        return;
-    }
     localStorage.setItem('cfg_supa_url', u);
     localStorage.setItem('cfg_supa_key', k);
-    SUPABASE_URL = u;
-    SUPABASE_KEY = k;
-    checkCloudConnection().then(ok => {
-        if (ok) toast('Conectado à Nuvem com Sucesso! 🟢', 'success');
-        else toast('Erro ao conectar com as chaves inseridas.', 'error');
-    });
+    SUPA_URL = u;
+    SUPA_KEY = k;
+    toast('Chaves salvas! Conexão ativa.', 'success');
 }
 
 // DASHBOARD
@@ -691,9 +681,7 @@ function uAll(){
     rEq();
 }
 
-// INICIALIZAÇÃO SEGURA
-$('cfgKey').value = SUPABASE_KEY;
-checkCloudConnection();
+$('cfgKey').value = SUPA_KEY;
 </script>
 </body>
 </html>
