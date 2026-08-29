@@ -30,9 +30,9 @@ input,select,textarea,button{font-family:inherit;color:var(--tx)}
 .login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f172a,#1e40af 50%,#2563eb);position:fixed;inset:0;z-index:999}
 .login-box{background:var(--bg2);border-radius:16px;padding:40px;width:420px;max-width:92vw;box-shadow:var(--shadow-lg);border:1px solid var(--bd)}
 .login-box h1{text-align:center;margin-bottom:6px;font-size:22px;color:var(--tx)}
-.login-box .sub{text-align:center;color:var(--tx2);margin-bottom:20px;font-size:13px}
+.login-box .sub{text-align:center;color:var(--tx2);margin-bottom:16px;font-size:13px}
 .login-box .logo-area{text-align:center;font-size:48px;margin-bottom:12px}
-.cloud-status{text-align:center;margin-bottom:16px;font-size:12px;padding:6px 12px;border-radius:20px;font-weight:600}
+.cloud-status{text-align:center;margin-bottom:16px;font-size:12px;padding:8px 12px;border-radius:10px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}
 
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:var(--sbg);color:#fff;overflow-y:auto;z-index:100;transition:transform .3s;display:flex;flex-direction:column}
 .sb-header{padding:20px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
@@ -118,7 +118,7 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 .ig input{border-radius:0 8px 8px 0;flex:1}
 
 .toast-container{position:fixed;top:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap:8px}
-.toast{padding:12px 18px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px}
+.toast{padding:12px 18px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px;max-width:360px}
 .toast-success{background:var(--success)}.toast-error{background:var(--danger)}.toast-info{background:var(--primary)}
 
 .page{display:none}.page.active{display:block}
@@ -152,7 +152,7 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 <h1>Sistema de Gestão</h1>
 <p class="sub">Serviços e Ativos de TI</p>
 <div id="loginCloudStatus" class="cloud-status" style="background:var(--warning-light);color:#92400e">
-Conectando ao Supabase...
+Verificando conexão...
 </div>
 <div class="fg" style="margin-bottom:14px"><label>Usuário</label><input type="text" id="loginUser" value="admin"></div>
 <div class="fg" style="margin-bottom:20px"><label>Senha</label><input type="password" id="loginPass" value="admin"></div>
@@ -215,70 +215,102 @@ Conectando ao Supabase...
 <div class="card"><div class="card-header"><div class="search-box"><span>🔍</span><input type="text" id="eqQ" placeholder="Buscar..." oninput="rEq()"></div><button class="btn btn-primary btn-sm" onclick="openEqM()">➕ Novo Equipamento</button></div><div class="table-wrap"><table><thead><tr><th>Foto</th><th>Cliente</th><th>Tipo</th><th>Marca/Modelo</th><th>Status</th><th>Ações</th></tr></thead><tbody id="eqTB"></tbody></table></div></div>
 </div>
 
-<!-- CONFIG -->
+<!-- CONFIG / SUPABASE -->
 <div class="page" id="page-config">
-<div class="card" style="max-width:650px"><div class="card-header"><h2>☁️ Status da Nuvem (Supabase)</h2></div><div class="card-body">
-<p style="margin-bottom:12px;font-size:13px;color:var(--tx2)">Sua conexão já está configurada com a nuvem do Supabase.</p>
-<div style="background:var(--bg);padding:14px;border-radius:8px;border:1px solid var(--bd);font-family:monospace;font-size:12px;word-break:break-all">
-<strong>URL:</strong> https://umzromnmsackakaajgji.supabase.co<br><br>
-<strong>Chave Pública:</strong> sb_publishable_fZMRKkVLkHeHtzfnmLnHpA_QlCWE-ub
+<div class="card" style="max-width:650px"><div class="card-header"><h2>☁️ Conexão com Supabase</h2></div><div class="card-body">
+<div class="fg" style="margin-bottom:12px">
+<label>Project URL</label>
+<input type="text" id="cfgUrl" value="https://umzromnmsackakaajgji.supabase.co">
 </div>
-<button class="btn btn-success" style="margin-top:16px" onclick="testConnection()">🔄 Testar Conexão Agora</button>
+<div class="fg" style="margin-bottom:16px">
+<label>Chave API (anon public - começa com eyJ...)</label>
+<input type="password" id="cfgKey" placeholder="Cole sua chave anon aqui...">
+</div>
+<button class="btn btn-success" onclick="salvarChavesManuais()">💾 Salvar e Conectar</button>
+<button class="btn btn-outline" style="margin-left:8px" onclick="checkCloudConnection()">🔄 Testar Conexão</button>
 </div></div>
 </div>
 
 </div></div></div>
 
-<!-- MODAL CLIENTE -->
-<div class="modal-overlay" id="mCli"><div class="modal modal-lg"><div class="mh"><h2 id="mCliH">Novo Cliente</h2><button class="mx" onclick="clM('mCli')">✕</button></div><div class="mb"><input type="hidden" id="cliId"><div class="fg2"><div class="fg full"><label>Nome / Razão Social *</label><input type="text" id="cNm"></div><div class="fg"><label>CPF/CNPJ</label><input type="text" id="cDc"></div><div class="fg"><label>Telefone</label><input type="text" id="cTl"></div><div class="fg"><label>WhatsApp</label><input type="text" id="cWh"></div><div class="fg"><label>Email</label><input type="email" id="cEm"></div><div class="fg"><label>CEP</label><input type="text" id="cCEP" oninput="bCEP(this.value)"></div><div class="fg"><label>Cidade</label><input type="text" id="cCd"></div><div class="fg full"><label>Endereço</label><input type="text" id="cLg"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mCli')">Cancelar</button><button class="btn btn-primary" onclick="saveCli()">💾 Salvar na Nuvem</button></div></div></div>
+<!-- MODAIS -->
+<div class="modal-overlay" id="mCli"><div class="modal modal-lg"><div class="mh"><h2 id="mCliH">Novo Cliente</h2><button class="mx" onclick="clM('mCli')">✕</button></div><div class="mb"><input type="hidden" id="cliId"><div class="fg2"><div class="fg full"><label>Nome / Razão Social *</label><input type="text" id="cNm"></div><div class="fg"><label>CPF/CNPJ</label><input type="text" id="cDc"></div><div class="fg"><label>Telefone</label><input type="text" id="cTl"></div><div class="fg"><label>WhatsApp</label><input type="text" id="cWh"></div><div class="fg"><label>Email</label><input type="email" id="cEm"></div><div class="fg"><label>Cidade</label><input type="text" id="cCd"></div><div class="fg full"><label>Endereço</label><input type="text" id="cLg"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mCli')">Cancelar</button><button class="btn btn-primary" onclick="saveCli()">💾 Salvar</button></div></div></div>
 
-<!-- MODAL SERVIÇO -->
 <div class="modal-overlay" id="mSvc"><div class="modal modal-md"><div class="mh"><h2 id="mSvcH">Novo Serviço</h2><button class="mx" onclick="clM('mSvc')">✕</button></div><div class="mb"><input type="hidden" id="svcId"><div class="fg2"><div class="fg"><label>Código</label><input type="text" id="sCd"></div><div class="fg"><label>Valor</label><div class="ig"><span class="pfx">R$</span><input type="text" id="sVl" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Descrição</label><input type="text" id="sDc"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mSvc')">Cancelar</button><button class="btn btn-primary" onclick="saveSvc()">💾 Salvar</button></div></div></div>
 
-<!-- MODAL OS -->
-<div class="modal-overlay" id="mOS"><div class="modal modal-md"><div class="mh"><h2 id="mOSH">Nova OS</h2><button class="mx" onclick="clM('mOS')">✕</button></div><div class="mb"><input type="hidden" id="osId"><div class="fg2"><div class="fg"><label>Nº OS</label><input type="text" id="osNm" readonly style="background:var(--bg)"></div><div class="fg"><label>Cliente</label><select id="osCliSel"></select></div><div class="fg"><label>Status</label><select id="osSt"><option>Aberta</option><option>Em andamento</option><option>Concluída</option><option>Paga</option><option>Devendo</option></select></div><div class="fg"><label>Valor Final</label><div class="ig"><span class="pfx">R$</span><input type="text" id="osVlF" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Observações</label><textarea id="osOb"></textarea></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mOS')">Cancelar</button><button class="btn btn-primary" onclick="saveOS()">💾 Salvar na Nuvem</button></div></div></div>
+<div class="modal-overlay" id="mOS"><div class="modal modal-md"><div class="mh"><h2 id="mOSH">Nova OS</h2><button class="mx" onclick="clM('mOS')">✕</button></div><div class="mb"><input type="hidden" id="osId"><div class="fg2"><div class="fg"><label>Nº OS</label><input type="text" id="osNm" readonly style="background:var(--bg)"></div><div class="fg"><label>Cliente</label><select id="osCliSel"></select></div><div class="fg"><label>Status</label><select id="osSt"><option>Aberta</option><option>Em andamento</option><option>Concluída</option><option>Paga</option><option>Devendo</option></select></div><div class="fg"><label>Valor Final</label><div class="ig"><span class="pfx">R$</span><input type="text" id="osVlF" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Observações</label><textarea id="osOb"></textarea></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mOS')">Cancelar</button><button class="btn btn-primary" onclick="saveOS()">💾 Salvar</button></div></div></div>
 
-<!-- MODAL EQUIPAMENTO -->
-<div class="modal-overlay" id="mEq"><div class="modal modal-lg"><div class="mh"><h2 id="mEqH">Novo Equipamento</h2><button class="mx" onclick="clM('mEq')">✕</button></div><div class="mb"><input type="hidden" id="eqId"><input type="hidden" id="eqFoto"><div class="fg2"><div class="fg"><label>Cliente</label><select id="eqCliSel"></select></div><div class="fg"><label>Tipo</label><select id="eqTipo" onchange="autoSearch()"><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Roteador</option></select></div><div class="fg"><label>Marca</label><input type="text" id="eqMarca" onblur="autoSearch()"></div><div class="fg"><label>Modelo</label><input type="text" id="eqModelo" onblur="autoSearch()"></div><div class="fg full"><label>Foto do Produto</label><div style="display:flex;gap:12px;align-items:center"><div id="eqPhotoPrev" style="width:70px;height:70px;border-radius:8px;border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)"><span style="font-size:24px">💻</span></div><button type="button" class="btn btn-outline btn-sm" onclick="searchPhotos()">🔍 Buscar Fotos</button></div><div class="eq-thumb-grid" id="eqThumbGrid"></div></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mEq')">Cancelar</button><button class="btn btn-primary" onclick="saveEq()">💾 Salvar</button></div></div></div>
+<div class="modal-overlay" id="mEq"><div class="modal modal-lg"><div class="mh"><h2 id="mEqH">Novo Equipamento</h2><button class="mx" onclick="clM('mEq')">✕</button></div><div class="mb"><input type="hidden" id="eqId"><input type="hidden" id="eqFoto"><div class="fg2"><div class="fg"><label>Cliente</label><select id="eqCliSel"></select></div><div class="fg"><label>Tipo</label><select id="eqTipo"><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Roteador</option></select></div><div class="fg"><label>Marca</label><input type="text" id="eqMarca"></div><div class="fg"><label>Modelo</label><input type="text" id="eqModelo"></div><div class="fg full"><label>Foto</label><div style="display:flex;gap:12px;align-items:center"><div id="eqPhotoPrev" style="width:70px;height:70px;border-radius:8px;border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)"><span style="font-size:24px">💻</span></div><button type="button" class="btn btn-outline btn-sm" onclick="searchPhotos()">🔍 Buscar Fotos</button></div><div class="eq-thumb-grid" id="eqThumbGrid"></div></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mEq')">Cancelar</button><button class="btn btn-primary" onclick="saveEq()">💾 Salvar</button></div></div></div>
 
 <div class="toast-container" id="toasts"></div>
 
 <script>
 // ==========================================
-// 🔑 SUAS CHAVES DO SUPABASE JÁ CONECTADAS:
+// CONFIGURAÇÃO SUPABASE
 // ==========================================
-const SUPABASE_URL = "https://umzromnmsackakaajgji.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtenJvbW5tc2Fja2FrYWFqZ2ppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwMTQyMzMsImV4cCI6MjEwMzU5MDIzM30.ZgSHHBYW50FBswMw4vHTEQfDWqxdXU42puQb8Mx5UJY";
+let SUPABASE_URL = localStorage.getItem('cfg_supa_url') || "https://umzromnmsackakaajgji.supabase.co";
+let SUPABASE_KEY = localStorage.getItem('cfg_supa_key') || "";
 
 let supabase = null;
 
-try {
-    if (window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        document.getElementById('loginCloudStatus').style.background = 'var(--success-light)';
-        document.getElementById('loginCloudStatus').style.color = 'var(--success)';
-        document.getElementById('loginCloudStatus').innerHTML = '🟢 Conectado ao Supabase';
-        document.getElementById('cloudBadge').style.background = 'var(--success-light)';
-        document.getElementById('cloudBadge').style.color = 'var(--success)';
-        document.getElementById('cloudBadge').innerHTML = '☁️ Nuvem Ativa';
+async function checkCloudConnection() {
+    const statusDiv = document.getElementById('loginCloudStatus');
+    const badge = document.getElementById('cloudBadge');
+
+    if (!SUPABASE_KEY || !SUPABASE_KEY.startsWith('eyJ')) {
+        statusDiv.style.background = 'var(--warning-light)';
+        statusDiv.style.color = '#92400e';
+        statusDiv.innerHTML = '🟠 Modo Local (Chave anon não configurada)';
+        badge.style.background = 'var(--warning-light)';
+        badge.style.color = '#92400e';
+        badge.innerHTML = '💾 Local';
+        return false;
     }
-} catch (e) {
-    console.error('Erro na conexão:', e);
+
+    try {
+        if (window.supabase) {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            // Teste simples de ping
+            const { error } = await supabase.from('tbl_clientes').select('id').limit(1);
+            if (!error) {
+                statusDiv.style.background = 'var(--success-light)';
+                statusDiv.style.color = 'var(--success)';
+                statusDiv.innerHTML = '🟢 Supabase Online e Conectado!';
+                badge.style.background = 'var(--success-light)';
+                badge.style.color = 'var(--success)';
+                badge.innerHTML = '☁️ Nuvem Ativa';
+                return true;
+            }
+        }
+    } catch (e) {
+        console.warn('Erro ao conectar Supabase:', e);
+    }
+
+    statusDiv.style.background = 'var(--danger-light)';
+    statusDiv.style.color = 'var(--danger)';
+    statusDiv.innerHTML = '🔴 Erro na Chave do Supabase (Usando Modo Local)';
+    badge.style.background = 'var(--danger-light)';
+    badge.style.color = 'var(--danger)';
+    badge.innerHTML = '⚠️ Chave Inválida';
+    return false;
 }
 
-// BANCO DE DADOS HÍBRIDO (ONLINE / OFFLINE FALLBACK)
+// BANCO DE DADOS RESILIENTE (NUVEM OU LOCAL)
 const DB = {
     async select(table) {
         if (supabase) {
-            const { data, error } = await supabase.from(table).select('*');
-            if (!error && data) return data;
+            try {
+                const { data, error } = await supabase.from(table).select('*');
+                if (!error && data) return data;
+            } catch (e) {}
         }
         return JSON.parse(localStorage.getItem(table) || '[]');
     },
     async insert(table, record) {
         if (supabase) {
-            const { error } = await supabase.from(table).insert([record]);
-            if (error) console.error('Erro no Supabase:', error);
+            try {
+                await supabase.from(table).insert([record]);
+            } catch (e) {}
         }
         const local = JSON.parse(localStorage.getItem(table) || '[]');
         local.push(record);
@@ -286,8 +318,9 @@ const DB = {
     },
     async update(table, id, record) {
         if (supabase) {
-            const { error } = await supabase.from(table).update(record).eq('id', id);
-            if (error) console.error('Erro no Supabase:', error);
+            try {
+                await supabase.from(table).update(record).eq('id', id);
+            } catch (e) {}
         }
         let local = JSON.parse(localStorage.getItem(table) || '[]');
         const idx = local.findIndex(x => x.id === id);
@@ -320,13 +353,14 @@ function opM(id){ $(id).classList.add('active'); }
 function clM(id){ $(id).classList.remove('active'); }
 function toggleSB(){ $('sidebar').classList.toggle('open'); $('sOv').classList.toggle('open'); }
 
+// LOGIN SEMPRE FUNCIONAL
 function doLogin(){
     const l = $('loginUser').value.trim();
     const p = $('loginPass').value;
     if (l === 'admin' && p === 'admin') {
         $('loginPage').style.display = 'none';
         $('app').style.display = 'block';
-        toast('Conectado com sucesso!', 'success');
+        toast('Login realizado com sucesso!', 'success');
         uAll();
     } else {
         toast('Usuário ou senha incorretos!', 'error');
@@ -372,7 +406,7 @@ async function rCli(){
 function openCliM(){
     $('cliId').value = '';
     $('mCliH').textContent = 'Novo Cliente';
-    ['cNm','cDc','cTl','cWh','cEm','cCEP','cCd','cLg'].forEach(f => $(f).value = '');
+    ['cNm','cDc','cTl','cWh','cEm','cCd','cLg'].forEach(f => $(f).value = '');
     opM('mCli');
 }
 
@@ -387,18 +421,13 @@ async function saveCli(){
         telefone: $('cTl').value.trim(),
         whatsapp: $('cWh').value.trim(),
         email: $('cEm').value.trim(),
-        cep: $('cCEP').value.trim(),
         cidade: $('cCd').value.trim(),
         logradouro: $('cLg').value.trim(),
         status: 'Ativo'
     };
-    if ($('cliId').value) {
-        await DB.update('tbl_clientes', id, data);
-        toast('Cliente atualizado!', 'success');
-    } else {
-        await DB.insert('tbl_clientes', data);
-        toast('Cliente gravado na nuvem!', 'success');
-    }
+    if ($('cliId').value) await DB.update('tbl_clientes', id, data);
+    else await DB.insert('tbl_clientes', data);
+    toast('Cliente salvo!', 'success');
     clM('mCli');
     rCli();
 }
@@ -414,7 +443,6 @@ async function editCli(id){
     $('cTl').value = c.telefone || '';
     $('cWh').value = c.whatsapp || '';
     $('cEm').value = c.email || '';
-    $('cCEP').value = c.cep || '';
     $('cCd').value = c.cidade || '';
     $('cLg').value = c.logradouro || '';
     opM('mCli');
@@ -449,7 +477,7 @@ async function saveSvc(){
     const data = { id, codigo: cod, descricao: desc, valor_unitario: pM($('sVl').value), status: 'Ativo' };
     if ($('svcId').value) await DB.update('tbl_servicos', id, data);
     else await DB.insert('tbl_servicos', data);
-    toast('Serviço salvo na nuvem!', 'success');
+    toast('Serviço salvo!', 'success');
     clM('mSvc');
     rSvc();
 }
@@ -507,7 +535,7 @@ async function saveOS(){
     };
     if ($('osId').value) await DB.update('tbl_os', id, data);
     else await DB.insert('tbl_os', data);
-    toast('OS salva na nuvem!', 'success');
+    toast('OS salva!', 'success');
     clM('mOS');
     rOS();
 }
@@ -590,11 +618,6 @@ async function editEq(id){
     opM('mEq');
 }
 
-function autoSearch(){
-    const t = `${$('eqMarca').value} ${$('eqModelo').value}`.trim();
-    if (t) searchPhotos();
-}
-
 async function searchPhotos(){
     const termo = `${$('eqMarca').value} ${$('eqModelo').value} computer hardware`.trim();
     const grid = $('eqThumbGrid');
@@ -618,21 +641,21 @@ function selPhoto(url){
     $('eqPhotoPrev').innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
 }
 
-function bCEP(v){
-    v = (v || '').replace(/\D/g, '');
-    if (v.length !== 8) return;
-    fetch(`https://viacep.com.br/ws/${v}/json/`).then(r => r.json()).then(d => {
-        if (!d.erro) {
-            $('cLg').value = d.logradouro || '';
-            $('cCd').value = d.localidade || '';
-            toast('Endereço carregado via CEP!', 'success');
-        }
+function salvarChavesManuais() {
+    const u = $('cfgUrl').value.trim();
+    const k = $('cfgKey').value.trim();
+    if (!k.startsWith('eyJ')) {
+        toast('Atenção: A chave anon deve começar com "eyJ..."', 'error');
+        return;
+    }
+    localStorage.setItem('cfg_supa_url', u);
+    localStorage.setItem('cfg_supa_key', k);
+    SUPABASE_URL = u;
+    SUPABASE_KEY = k;
+    checkCloudConnection().then(ok => {
+        if (ok) toast('Conectado à Nuvem com Sucesso! 🟢', 'success');
+        else toast('Erro ao conectar com as chaves inseridas.', 'error');
     });
-}
-
-function testConnection(){
-    if (supabase) toast('Conexão com Supabase 100% Operacional! 🟢', 'success');
-    else toast('Erro ao conectar com Supabase.', 'error');
 }
 
 // DASHBOARD
@@ -667,6 +690,10 @@ function uAll(){
     rOS();
     rEq();
 }
+
+// INICIALIZAÇÃO SEGURA
+$('cfgKey').value = SUPABASE_KEY;
+checkCloudConnection();
 </script>
 </body>
 </html>
