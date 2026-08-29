@@ -55,6 +55,7 @@ input,select,textarea,button{font-family:inherit;color:var(--tx)}
 .main{margin-left:260px;min-height:100vh;background:var(--bg)}
 .topbar{background:var(--bg2);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
 .topbar h1{font-size:18px;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:12px}
 .content{padding:28px}
 
 /* UI ELEMENTS */
@@ -64,9 +65,11 @@ input,select,textarea,button{font-family:inherit;color:var(--tx)}
 .btn-success{background:var(--success);color:#fff}.btn-danger{background:var(--danger);color:#fff}
 .btn-warning{background:var(--warning);color:#fff}
 .btn-outline{background:var(--bg2);color:var(--tx);border:1px solid var(--bd)}.btn-outline:hover{background:var(--bg)}
-.btn-sm{padding:5px 10px;font-size:12px}
+.btn-sm{padding:5px 10px;font-size:12px}.btn-xs{padding:3px 8px;font-size:11px}
 .btn-icon{width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:var(--bg2);border:1px solid var(--bd);cursor:pointer;font-size:14px}
 .btn-icon:hover{background:var(--bg)}.btn-icon.whatsapp{background:#25D366;color:#fff;border:none}
+.btn-icon.danger:hover{background:var(--danger-light);color:var(--danger)}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
 
 .card{background:var(--bg2);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--bd)}
 .card-header{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -84,24 +87,30 @@ input,select,textarea,button{font-family:inherit;color:var(--tx)}
 
 .search-box{display:flex;align-items:center;background:var(--bg);border-radius:8px;padding:7px 12px;gap:6px;border:1px solid var(--bd)}
 .search-box input{border:none;background:none;outline:none;font-size:13px;width:170px;color:var(--tx)}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select.flt{padding:7px 10px;border:1px solid var(--bd);border-radius:8px;font-size:12px;background:var(--bg2);color:var(--tx)}
 
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);background:var(--bg);border-bottom:1px solid var(--bd);white-space:nowrap}
+thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);background:var(--bg);border-bottom:1px solid var(--bd);white-space:nowrap;cursor:pointer}
+thead th:hover{color:var(--tx)}
 tbody tr{border-bottom:1px solid var(--bd2);transition:.1s}tbody tr:hover{background:var(--bg)}
 tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 
 .badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block;white-space:nowrap}
 .badge-ativo,.badge-aberta,.badge-paga{background:var(--success-light);color:var(--success)}
-.badge-inativo,.badge-cancelada{background:var(--bg);color:var(--tx3)}
+.badge-inativo,.badge-cancelada,.badge-excluida{background:var(--bg);color:var(--tx3)}
 .badge-em-andamento,.badge-em-manutencao{background:var(--info-light);color:var(--info)}
 .badge-devendo,.badge-vencida{background:var(--danger-light);color:var(--danger)}
 .badge-concluida{background:var(--purple-light);color:var(--purple)}
+.badge-preventiva{background:var(--info-light);color:var(--info)}
+.badge-corretiva{background:var(--danger-light);color:var(--danger)}
+.badge-upgrade{background:var(--purple-light);color:var(--purple)}
 
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .modal-overlay.active{display:flex}
 .modal{background:var(--bg2);border-radius:14px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:var(--shadow-lg);border:1px solid var(--bd)}
-.modal-sm{max-width:440px}.modal-md{max-width:640px}.modal-lg{max-width:900px}
+.modal-sm{max-width:440px}.modal-md{max-width:640px}.modal-lg{max-width:900px}.modal-xl{max-width:1100px}
 .mh{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
 .mh h2{font-size:18px;font-weight:700}
 .mx{width:32px;height:32px;border:none;background:var(--bg);border-radius:8px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx3)}
@@ -109,12 +118,21 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 
 .fg2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .fg{display:flex;flex-direction:column;gap:4px}.fg.full{grid-column:1/-1}
-.fg label{font-size:12px;font-weight:600;color:var(--tx2)}
+.fg label{font-size:12px;font-weight:600;color:var(--tx2)}.fg .req{color:var(--danger)}
 .fg input,.fg select,.fg textarea{padding:8px 12px;border:1px solid var(--bd);border-radius:8px;font-size:13px;background:var(--bg3);color:var(--tx)}
 .fg textarea{resize:vertical;min-height:70px}
 .ig{display:flex;align-items:stretch}
 .ig .pfx{padding:8px 10px;background:var(--bg);border:1px solid var(--bd);border-right:none;border-radius:8px 0 0 8px;font-size:12px;color:var(--tx3);display:flex;align-items:center;font-weight:600}
 .ig input{border-radius:0 8px 8px 0;flex:1}
+
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--bd);margin-bottom:16px;overflow-x:auto}
+.tab{padding:10px 16px;font-size:13px;font-weight:600;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tab:hover{color:var(--tx2)}.tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tc{display:none}.tc.active{display:block}
+
+.alert-bar{padding:12px 16px;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.alert-warning{background:var(--warning-light);color:#92400e}.alert-danger{background:var(--danger-light);color:var(--danger)}
+.alert-info{background:var(--info-light);color:#0369a1}
 
 .toast-container{position:fixed;top:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap:8px}
 .toast{padding:12px 18px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px;max-width:360px}
@@ -126,11 +144,43 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 .qa:hover{border-color:var(--primary);transform:translateY(-2px)}
 .qa .qi{font-size:28px;margin-bottom:6px}.qa .ql{font-size:12px;font-weight:600}
 
+.os-items-table th,.os-items-table td{padding:8px 10px;font-size:13px}
+.os-items-table input,.os-items-table select{padding:6px 8px;font-size:12px;border:1px solid var(--bd);border-radius:6px;background:var(--bg3);color:var(--tx)}
+.os-totals{background:var(--bg);border-radius:8px;padding:16px;margin-top:12px;border:1px solid var(--bd)}
+.os-totals .row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:14px}
+.os-totals .row.total{font-weight:800;font-size:18px;color:var(--primary);border-top:2px solid var(--bd);padding-top:8px;margin-top:4px}
+
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.di label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);font-weight:700}
+.di p{font-size:14px;color:var(--tx);margin-top:2px;font-weight:500}.di.full{grid-column:1/-1}
+
+.ranking-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ranking-bar .rn{font-weight:800;font-size:16px;color:var(--primary);min-width:30px}
+.ranking-bar .rm{min-width:130px;font-weight:600;font-size:13px}
+.ranking-bar .rf{flex:1;height:24px;background:var(--bg);border-radius:6px;overflow:hidden;border:1px solid var(--bd)}
+.ranking-bar .rfi{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;transition:width .5s}
+.ranking-bar .rv{font-weight:700;font-size:13px;min-width:40px;text-align:right}
+
+.ck{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ck label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tx2);cursor:pointer;padding:4px 8px;border-radius:6px}
+.ck label:hover{background:var(--bg)}.ck input[type=checkbox]{accent-color:var(--primary);width:16px;height:16px}
+
+.img-up{width:100px;height:100px;border:2px dashed var(--bd);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;background:var(--bg);flex-shrink:0}
+.img-up img{width:100%;height:100%;object-fit:cover}
+
+/* EQUIPMENT PHOTOS */
+.eq-photo-area{display:flex;gap:16px;align-items:flex-start;margin-top:12px;padding:16px;background:var(--bg);border-radius:10px;border:1px solid var(--bd)}
+.eq-photo-preview{width:130px;height:130px;border-radius:12px;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg2);flex-shrink:0}
+.eq-photo-preview img{width:100%;height:100%;object-fit:cover}
 .eq-thumb-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .eq-thumb{width:56px;height:56px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid transparent}
 .eq-thumb:hover{border-color:var(--primary);transform:scale(1.05)}
 .eq-list-thumb{width:36px;height:36px;border-radius:6px;object-fit:cover;border:1px solid var(--bd)}
 .eq-list-thumb-ph{width:36px;height:36px;border-radius:6px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid var(--bd)}
+
+.rel-filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;padding:16px;background:var(--bg);border-radius:8px;margin-bottom:16px;border:1px solid var(--bd)}
+.rel-filters .fg label{font-size:11px}
+.rpt-preview{background:#fff;color:#333;border:1px solid var(--bd);border-radius:8px;padding:32px;max-width:900px;margin:0 auto}
 
 .menu-toggle{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--tx)}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
@@ -138,20 +188,21 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 @media(max-width:768px){
 .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.sidebar-overlay.open{display:block}
 .main{margin-left:0}.menu-toggle{display:block}.content{padding:16px}
-.fg2{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}
+.fg2,.dg{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.eq-photo-area{flex-direction:column;align-items:center}
 }
+@media print{.sidebar,.topbar,.btn,.modal-overlay,.toast-container,.sidebar-overlay{display:none!important}.main{margin-left:0!important}.content{padding:0!important}}
 </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN (ABRE INSTANTANEAMENTE) -->
+<!-- LOGIN -->
 <div class="login-page" id="loginPage">
 <div class="login-box">
-<div class="logo-area">🔧</div>
-<h1>Sistema de Gestão</h1>
+<div class="logo-area" id="loginLogo">🔧</div>
+<h1 id="loginTitle">Sistema de Gestão</h1>
 <p class="sub">Serviços e Ativos de TI</p>
 <div id="loginCloudStatus" class="cloud-status" style="background:var(--success-light);color:var(--success)">
-🟢 Sistema Pronto para Uso
+🟢 Sistema Conectado à Nuvem (Supabase)
 </div>
 <div class="fg" style="margin-bottom:14px"><label>Usuário</label><input type="text" id="loginUser" value="admin"></div>
 <div class="fg" style="margin-bottom:20px"><label>Senha</label><input type="password" id="loginPass" value="admin"></div>
@@ -159,20 +210,21 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 <p style="margin-top:16px;font-size:11px;color:var(--tx3);text-align:center">Acesso Padrão: admin / admin</p>
 </div></div>
 
-<!-- APLICAÇÃO PRINCIPAL -->
+<!-- APP -->
 <div class="app" id="app" style="display:none;">
 <div class="sidebar-overlay" id="sOv" onclick="toggleSB()"></div>
 <aside class="sidebar" id="sidebar">
-<div class="sb-header"><span style="font-size:20px">🔧</span><h2>Gestão TI</h2></div>
+<div class="sb-header"><span id="sbLogo" style="font-size:20px">🔧</span><h2 id="sbTitle">Gestão TI</h2></div>
 <div class="sb-nav">
 <div class="sb-section"><a href="#" class="active" data-page="dashboard"><span class="ic">📊</span> Dashboard</a></div>
-<div class="sb-section"><div class="sb-label">Clientes</div><a href="#" data-page="clientes"><span class="ic">👥</span> Clientes</a><a href="#" onclick="openCliM()"><span class="ic">➕</span> Novo Cliente</a></div>
-<div class="sb-section"><div class="sb-label">Serviços</div><a href="#" data-page="servicos"><span class="ic">🛠️</span> Serviços</a><a href="#" onclick="openSvcM()"><span class="ic">➕</span> Novo Serviço</a></div>
-<div class="sb-section"><div class="sb-label">Ordens de Serviço</div><a href="#" data-page="os"><span class="ic">📋</span> Todas as OS</a><a href="#" onclick="openOSM()"><span class="ic">➕</span> Nova OS</a></div>
-<div class="sb-section"><div class="sb-label">Inventário</div><a href="#" data-page="equip"><span class="ic">💻</span> Equipamentos</a><a href="#" onclick="openEqM()"><span class="ic">➕</span> Novo Equip.</a></div>
-<div class="sb-section"><div class="sb-label">Sistema</div><a href="#" data-page="config"><span class="ic">⚙️</span> Configurações / Nuvem</a></div>
+<div class="sb-section"><div class="sb-label">Clientes</div><a href="#" data-page="clientes" data-perm="clientes"><span class="ic">👥</span> Clientes</a><a href="#" onclick="openCliM()" data-perm="novo_cliente"><span class="ic">➕</span> Novo Cliente</a></div>
+<div class="sb-section"><div class="sb-label">Serviços</div><a href="#" data-page="servicos" data-perm="servicos"><span class="ic">🛠️</span> Serviços</a><a href="#" onclick="openSvcM()" data-perm="novo_servico"><span class="ic">➕</span> Novo Serviço</a></div>
+<div class="sb-section"><div class="sb-label">Ordens de Serviço</div><a href="#" data-page="os" data-perm="os"><span class="ic">📋</span> Todas as OS</a><a href="#" onclick="openOSM()" data-perm="nova_os"><span class="ic">➕</span> Nova OS</a></div>
+<div class="sb-section"><div class="sb-label">Inventário</div><a href="#" data-page="equip" data-perm="equip"><span class="ic">💻</span> Equipamentos</a><a href="#" onclick="openEqM()" data-perm="novo_equip"><span class="ic">➕</span> Novo Equip.</a><a href="#" data-page="manut" data-perm="manut"><span class="ic">🔧</span> Manutenções</a></div>
+<div class="sb-section"><div class="sb-label">Relatórios</div><a href="#" data-page="relatorios" data-perm="relatorios"><span class="ic">📈</span> Relatórios</a></div>
+<div class="sb-section" id="sbAdmin"><div class="sb-label">Administração</div><a href="#" data-page="usuarios"><span class="ic">👤</span> Usuários</a><a href="#" data-page="logs"><span class="ic">📝</span> Logs</a><a href="#" data-page="config"><span class="ic">⚙️</span> Configurações</a><a href="#" data-page="backup"><span class="ic">💾</span> Backup</a></div>
 </div>
-<div class="sb-footer"><div class="sb-user"><div class="sb-avatar">A</div><div class="sb-info"><div class="nm">Admin</div><div class="rl">Administrador</div></div><button class="sb-logout" onclick="doLogout()" title="Sair">🚪</button></div></div>
+<div class="sb-footer"><div class="sb-user"><div class="sb-avatar" id="sbAv">A</div><div class="sb-info"><div class="nm" id="sbUN">Admin</div><div class="rl" id="sbUR">Administrador</div></div><button class="sb-logout" onclick="doLogout()" title="Sair">🚪</button></div></div>
 </aside>
 
 <div class="main">
@@ -181,8 +233,9 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 <button class="menu-toggle" onclick="toggleSB()">☰</button>
 <h1 id="pageTitle">Dashboard</h1>
 </div>
-<div style="display:flex;align-items:center;gap:10px">
-<span id="cloudBadge" style="font-size:12px;padding:4px 10px;border-radius:12px;font-weight:600;background:var(--success-light);color:var(--success)">☁️ Conectado</span>
+<div class="topbar-right">
+<span id="cloudBadge" style="font-size:12px;padding:4px 10px;border-radius:12px;font-weight:600;background:var(--success-light);color:var(--success)">☁️ Nuvem Conectada</span>
+<span style="font-size:12px;color:var(--tx3)" id="topUI"></span>
 </div>
 </div>
 <div class="content">
@@ -191,70 +244,140 @@ tbody td{padding:10px 14px;font-size:13px;color:var(--tx2)}
 <div class="page active" id="page-dashboard">
 <div class="qa-grid" id="qaG"></div>
 <div class="stats-grid" id="dSt"></div>
+<div id="dAl"></div>
 <div class="card"><div class="card-header"><h2>📋 Últimas OS</h2></div><div class="table-wrap"><table><thead><tr><th>Nº</th><th>Cliente</th><th>Data</th><th>Status</th><th>Valor</th></tr></thead><tbody id="dRec"></tbody></table></div></div>
 </div>
 
 <!-- CLIENTES -->
 <div class="page" id="page-clientes">
-<div class="card"><div class="card-header"><div class="search-box"><span>🔍</span><input type="text" id="cliQ" placeholder="Buscar cliente..." oninput="rCli()"></div><button class="btn btn-primary btn-sm" onclick="openCliM()">➕ Novo Cliente</button></div><div class="table-wrap"><table><thead><tr><th>Nome</th><th>Telefone</th><th>WhatsApp</th><th>Email</th><th>Cidade</th><th>Status</th><th>Ações</th></tr></thead><tbody id="cliTB"></tbody></table></div></div>
+<div class="card"><div class="card-header">
+<div class="filter-bar"><div class="search-box"><span>🔍</span><input type="text" id="cliQ" placeholder="Buscar cliente..." oninput="rCli()"></div><select class="flt" id="cliSF" onchange="rCli()"><option value="">Todos</option><option>Ativo</option><option>Inativo</option></select></div>
+<div class="btn-group"><button class="btn btn-primary btn-sm" onclick="openCliM()">➕ Novo Cliente</button><button class="btn btn-outline btn-sm" onclick="expCSV('cli')">📥 CSV</button></div>
+</div><div class="table-wrap"><table><thead><tr><th onclick="srt('cli','nome')">Nome ↕</th><th>CPF/CNPJ</th><th>Telefone</th><th>WhatsApp</th><th>Cidade</th><th>Status</th><th>Ações</th></tr></thead><tbody id="cliTB"></tbody></table></div></div>
 </div>
 
 <!-- SERVIÇOS -->
 <div class="page" id="page-servicos">
-<div class="card"><div class="card-header"><div class="search-box"><span>🔍</span><input type="text" id="svcQ" placeholder="Buscar..." oninput="rSvc()"></div><button class="btn btn-primary btn-sm" onclick="openSvcM()">➕ Novo Serviço</button></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="svcTB"></tbody></table></div></div>
+<div class="card"><div class="card-header"><div class="search-box"><span>🔍</span><input type="text" id="svcQ" placeholder="Buscar..." oninput="rSvc()"></div><button class="btn btn-primary btn-sm" onclick="openSvcM()">➕ Novo Serviço</button></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Tempo</th><th>Status</th><th>Ações</th></tr></thead><tbody id="svcTB"></tbody></table></div></div>
 </div>
 
 <!-- OS -->
 <div class="page" id="page-os">
-<div class="card"><div class="card-header"><div class="search-box"><span>🔍</span><input type="text" id="osQ" placeholder="Buscar OS..." oninput="rOS()"></div><button class="btn btn-primary btn-sm" onclick="openOSM()">➕ Nova OS</button></div><div class="table-wrap"><table><thead><tr><th>Nº OS</th><th>Cliente</th><th>Emissão</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="osTB"></tbody></table></div></div>
+<div class="card"><div class="card-header">
+<div class="filter-bar"><div class="search-box"><span>🔍</span><input type="text" id="osQ" placeholder="Buscar OS..." oninput="rOS()"></div><select class="flt" id="osSF" onchange="rOS()"><option value="">Todos</option><option>Aberta</option><option>Em andamento</option><option>Concluída</option><option>Paga</option><option>Devendo</option><option>Cancelada</option></select></div>
+<div class="btn-group"><button class="btn btn-primary btn-sm" onclick="openOSM()">➕ Nova OS</button><button class="btn btn-warning btn-sm" onclick="updVnc()">🔄 Vencidas</button><button class="btn btn-outline btn-sm" onclick="expCSV('os')">📥 CSV</button></div>
+</div><div class="table-wrap"><table><thead><tr><th>Nº OS</th><th>Cliente</th><th>Emissão</th><th>Vencimento</th><th>Status</th><th>Total</th><th>Final</th><th>Ações</th></tr></thead><tbody id="osTB"></tbody></table></div></div>
 </div>
 
 <!-- EQUIPAMENTOS -->
 <div class="page" id="page-equip">
-<div class="card"><div class="card-header"><div class="search-box"><span>🔍</span><input type="text" id="eqQ" placeholder="Buscar..." oninput="rEq()"></div><button class="btn btn-primary btn-sm" onclick="openEqM()">➕ Novo Equipamento</button></div><div class="table-wrap"><table><thead><tr><th>Foto</th><th>Cliente</th><th>Tipo</th><th>Marca/Modelo</th><th>Status</th><th>Ações</th></tr></thead><tbody id="eqTB"></tbody></table></div></div>
+<div class="card"><div class="card-header">
+<div class="filter-bar"><div class="search-box"><span>🔍</span><input type="text" id="eqQ" placeholder="Buscar equipamento..." oninput="rEq()"></div><select class="flt" id="eqCF" onchange="rEq()"><option value="">Todos Clientes</option></select><select class="flt" id="eqTF" onchange="rEq()"><option value="">Todos Tipos</option><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Roteador</option></select></div>
+<div class="btn-group"><button class="btn btn-primary btn-sm" onclick="openEqM()">➕ Novo Equipamento</button><button class="btn btn-outline btn-sm" onclick="expCSV('eq')">📥 CSV</button></div>
+</div><div class="table-wrap"><table><thead><tr><th>Foto</th><th>Cliente</th><th>Tipo</th><th>Marca/Modelo</th><th>Nº Série</th><th>Status</th><th>Garantia</th><th>Ações</th></tr></thead><tbody id="eqTB"></tbody></table></div></div>
 </div>
 
-<!-- CONFIG / SUPABASE -->
+<!-- MANUTENÇÕES -->
+<div class="page" id="page-manut">
+<div class="card"><div class="card-header"><h2>🔧 Manutenções</h2><button class="btn btn-primary btn-sm" onclick="openManM()">➕ Nova Manutenção</button></div><div class="table-wrap"><table><thead><tr><th>Equipamento</th><th>Data</th><th>Tipo</th><th>Técnico</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="manTB"></tbody></table></div></div>
+</div>
+
+<!-- RELATÓRIOS -->
+<div class="page" id="page-relatorios">
+<div class="card"><div class="card-header"><h2>📈 Centro de Relatórios</h2></div><div class="card-body">
+<div class="fg" style="margin-bottom:16px;max-width:320px"><label style="font-size:14px;font-weight:700;color:var(--primary)">📋 Tipo de Relatório</label><select id="relT" onchange="updRF()" style="font-size:14px;padding:10px;font-weight:600"><option value="os_periodo">📋 OS por Período</option><option value="os_cliente">👤 OS por Cliente</option><option value="os_vencidas">⚠️ OS Vencidas</option><option value="os_pagas">💰 OS Pagas</option><option value="financeiro">💵 Faturamento</option><option value="svc_top">🏆 Serviços Top Ranking</option><option value="cli_top">👥 Clientes Top Ranking</option><option value="equip_rel">💻 Equipamentos</option><option value="garantias">📅 Garantias</option></select></div>
+<div class="rel-filters" id="relF"></div>
+<div class="btn-group" style="margin-bottom:16px"><button class="btn btn-primary" onclick="genRel()">📊 Gerar Relatório</button><button class="btn btn-outline" onclick="window.print()">🖨️ Imprimir</button></div>
+<div id="relR"></div>
+</div></div></div>
+
+<!-- USUÁRIOS -->
+<div class="page" id="page-usuarios"><div class="card"><div class="card-header"><h2>👤 Gestão de Usuários</h2><button class="btn btn-primary btn-sm" onclick="openUsrM()">➕ Novo Usuário</button></div><div class="table-wrap"><table><thead><tr><th>Nome</th><th>Login</th><th>Empresa</th><th>Perfil</th><th>Status</th><th>Ações</th></tr></thead><tbody id="usrTB"></tbody></table></div></div></div>
+
+<!-- LOGS -->
+<div class="page" id="page-logs"><div class="card"><div class="card-header"><h2>📝 Logs de Auditoria</h2></div><div class="card-body" id="lgBox" style="max-height:500px;overflow-y:auto"></div></div></div>
+
+<!-- CONFIGURAÇÕES -->
 <div class="page" id="page-config">
-<div class="card" style="max-width:650px"><div class="card-header"><h2>☁️ Configuração da Nuvem (Supabase)</h2></div><div class="card-body">
-<div class="fg" style="margin-bottom:12px">
-<label>Project URL</label>
-<input type="text" id="cfgUrl" value="https://umzromnmsackakaajgji.supabase.co">
-</div>
-<div class="fg" style="margin-bottom:16px">
-<label>Chave API (anon public - começa com eyJ...)</label>
-<input type="password" id="cfgKey" placeholder="Cole sua chave anon do Supabase aqui">
-</div>
-<button class="btn btn-success" onclick="salvarChavesManuais()">💾 Salvar Chaves</button>
-</div></div>
-</div>
+<div class="card" style="max-width:750px"><div class="card-header"><h2>⚙️ Configurações Gerais do Sistema</h2></div><div class="card-body">
+<div class="fg2">
+<div class="fg full"><label>Nome da Empresa</label><input type="text" id="cfgE"></div>
+<div class="fg"><label>Telefone</label><input type="text" id="cfgT"></div>
+<div class="fg"><label>WhatsApp</label><input type="text" id="cfgW"></div>
+<div class="fg"><label>Email</label><input type="email" id="cfgM"></div>
+<div class="fg"><label>CNPJ</label><input type="text" id="cfgC"></div>
+<div class="fg full"><label>Endereço</label><input type="text" id="cfgEn"></div>
+<div class="fg"><label>Prefixo OS</label><input type="text" id="cfgPx" value="OS"></div>
+<div class="fg"><label>Tema</label><select id="cfgTm" onchange="setTh(this.value)"><option value="light">☀️ Claro</option><option value="dark">🌙 Escuro</option></select></div>
+<div class="fg full"><label>Logo / QR Code PIX (Impressão da OS)</label><div style="display:flex;gap:12px;align-items:center"><div class="img-up" onclick="$('cfgLF').click()" id="cfgLP"><span style="font-size:24px">📷</span></div><input type="file" id="cfgLF" accept="image/*" style="display:none" onchange="prevLogo(this)"><span style="font-size:12px;color:var(--tx3)">Clique para importar imagem</span></div></div>
+</div><div class="btn-group" style="margin-top:20px"><button class="btn btn-primary" onclick="saveCfg()">💾 Salvar Configurações</button></div>
+</div></div></div>
+
+<!-- BACKUP -->
+<div class="page" id="page-backup"><div class="card" style="max-width:600px"><div class="card-header"><h2>💾 Backup e Exportação</h2></div><div class="card-body"><div class="btn-group" style="margin-bottom:24px"><button class="btn btn-primary" onclick="doBk()">📦 Baixar Backup JSON</button><button class="btn btn-success" onclick="doBkCSV()">📊 Exportar Tabelas CSV</button></div></div></div></div>
 
 </div></div></div>
 
-<!-- MODAL CLIENTE -->
-<div class="modal-overlay" id="mCli"><div class="modal modal-lg"><div class="mh"><h2 id="mCliH">Novo Cliente</h2><button class="mx" onclick="clM('mCli')">✕</button></div><div class="mb"><input type="hidden" id="cliId"><div class="fg2"><div class="fg full"><label>Nome / Razão Social *</label><input type="text" id="cNm"></div><div class="fg"><label>CPF/CNPJ</label><input type="text" id="cDc"></div><div class="fg"><label>Telefone</label><input type="text" id="cTl"></div><div class="fg"><label>WhatsApp</label><input type="text" id="cWh"></div><div class="fg"><label>Email</label><input type="email" id="cEm"></div><div class="fg"><label>CEP (Auto)</label><input type="text" id="cCEP" oninput="bCEP(this.value)"></div><div class="fg"><label>Cidade</label><input type="text" id="cCd"></div><div class="fg full"><label>Endereço</label><input type="text" id="cLg"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mCli')">Cancelar</button><button class="btn btn-primary" onclick="saveCli()">💾 Salvar</button></div></div></div>
+<!-- ==================== MODAIS ==================== -->
+
+<!-- MODAL CLIENTE COMPLETO -->
+<div class="modal-overlay" id="mCli"><div class="modal modal-lg"><div class="mh"><h2 id="mCliH">Novo Cliente</h2><button class="mx" onclick="clM('mCli')">✕</button></div><div class="mb"><input type="hidden" id="cliId">
+<div class="tabs"><div class="tab active" onclick="sTab(this,'ct')">Dados Principais</div><div class="tab" onclick="sTab(this,'ct')">Endereço</div><div class="tab" onclick="sTab(this,'ct')">Contato</div></div>
+<div class="tc ct active"><div class="fg2"><div class="fg"><label>Tipo <span class="req">*</span></label><select id="cTp"><option>Pessoa Física</option><option>Pessoa Jurídica</option></select></div><div class="fg"><label>Status</label><select id="cSt"><option>Ativo</option><option>Inativo</option></select></div><div class="fg full"><label>Nome / Razão Social <span class="req">*</span></label><input type="text" id="cNm"></div><div class="fg"><label>Nome Fantasia</label><input type="text" id="cFn"></div><div class="fg"><label>CPF/CNPJ</label><input type="text" id="cDc"></div><div class="fg"><label>Telefone</label><input type="text" id="cTl"></div><div class="fg"><label>WhatsApp</label><input type="text" id="cWh"></div><div class="fg"><label>Email</label><input type="email" id="cEm"></div><div class="fg full"><label>Observações</label><textarea id="cOb"></textarea></div></div></div>
+<div class="tc ct"><div class="fg2"><div class="fg"><label>CEP (Busca automática)</label><input type="text" id="cCEP" maxlength="9" oninput="bCEP(this.value)"></div><div class="fg" style="align-items:flex-end"><button class="btn btn-outline btn-sm" onclick="bCEP($('cCEP').value)" type="button">🔍 Buscar CEP</button></div><div class="fg full"><label>Logradouro</label><input type="text" id="cLg"></div><div class="fg"><label>Número</label><input type="text" id="cNr"></div><div class="fg"><label>Complemento</label><input type="text" id="cCp"></div><div class="fg"><label>Bairro</label><input type="text" id="cBr"></div><div class="fg"><label>Cidade</label><input type="text" id="cCd"></div><div class="fg"><label>Estado</label><input type="text" id="cUF" maxlength="2"></div></div></div>
+<div class="tc ct"><div class="fg2"><div class="fg"><label>Responsável</label><input type="text" id="cRs"></div><div class="fg"><label>Cargo</label><input type="text" id="cCg"></div><div class="fg"><label>Telefone Contato</label><input type="text" id="cRT"></div><div class="fg"><label>WhatsApp Contato</label><input type="text" id="cRW"></div><div class="fg"><label>Email Contato</label><input type="email" id="cRM"></div></div></div>
+</div><div class="mf"><button class="btn btn-outline" onclick="clM('mCli')">Cancelar</button><button class="btn btn-primary" onclick="saveCli()">💾 Salvar Cliente</button></div></div></div>
+
+<!-- MODAL PÓS-CADASTRO CLIENTE -->
+<div class="modal-overlay" id="mCliP"><div class="modal modal-sm"><div class="mh"><h2>✅ Cliente Cadastrado!</h2><button class="mx" onclick="clM('mCliP')">✕</button></div><div class="mb" style="text-align:center;padding:30px"><div style="font-size:48px;margin-bottom:16px">🎉</div><p style="font-size:15px;margin-bottom:24px">O que deseja fazer agora com este cliente?</p><button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:8px" onclick="clM('mCliP');openEqM()">💻 Cadastrar Equipamento</button><button class="btn btn-success" style="width:100%;justify-content:center;margin-bottom:8px" onclick="clM('mCliP');openOSM()">📋 Criar Ordem de Serviço</button><button class="btn btn-outline" style="width:100%;justify-content:center" onclick="clM('mCliP')">Fechar</button></div></div></div>
 
 <!-- MODAL SERVIÇO -->
-<div class="modal-overlay" id="mSvc"><div class="modal modal-md"><div class="mh"><h2 id="mSvcH">Novo Serviço</h2><button class="mx" onclick="clM('mSvc')">✕</button></div><div class="mb"><input type="hidden" id="svcId"><div class="fg2"><div class="fg"><label>Código</label><input type="text" id="sCd"></div><div class="fg"><label>Valor</label><div class="ig"><span class="pfx">R$</span><input type="text" id="sVl" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Descrição</label><input type="text" id="sDc"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mSvc')">Cancelar</button><button class="btn btn-primary" onclick="saveSvc()">💾 Salvar</button></div></div></div>
+<div class="modal-overlay" id="mSvc"><div class="modal modal-md"><div class="mh"><h2 id="mSvcH">Novo Serviço</h2><button class="mx" onclick="clM('mSvc')">✕</button></div><div class="mb"><input type="hidden" id="svcId"><div class="fg2"><div class="fg"><label>Código *</label><input type="text" id="sCd"></div><div class="fg"><label>Status</label><select id="sSt"><option>Ativo</option><option>Inativo</option></select></div><div class="fg full"><label>Descrição *</label><input type="text" id="sDc"></div><div class="fg"><label>Categoria</label><select id="sCt"><option>Formatação</option><option>Instalação</option><option>Configuração</option><option>Limpeza</option><option>Manutenção</option><option>Upgrade</option><option>Rede</option><option>Suporte</option><option>Outro</option></select></div><div class="fg"><label>Valor Unitário</label><div class="ig"><span class="pfx">R$</span><input type="text" id="sVl" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg"><label>Tempo Estimado</label><input type="text" id="sTm" placeholder="00:00" maxlength="5" oninput="mT(this)"></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mSvc')">Cancelar</button><button class="btn btn-primary" onclick="saveSvc()">💾 Salvar</button></div></div></div>
 
-<!-- MODAL OS -->
-<div class="modal-overlay" id="mOS"><div class="modal modal-md"><div class="mh"><h2 id="mOSH">Nova OS</h2><button class="mx" onclick="clM('mOS')">✕</button></div><div class="mb"><input type="hidden" id="osId"><div class="fg2"><div class="fg"><label>Nº OS</label><input type="text" id="osNm" readonly style="background:var(--bg)"></div><div class="fg"><label>Cliente</label><select id="osCliSel"></select></div><div class="fg"><label>Status</label><select id="osSt"><option>Aberta</option><option>Em andamento</option><option>Concluída</option><option>Paga</option><option>Devendo</option></select></div><div class="fg"><label>Valor Final</label><div class="ig"><span class="pfx">R$</span><input type="text" id="osVlF" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Observações</label><textarea id="osOb"></textarea></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mOS')">Cancelar</button><button class="btn btn-primary" onclick="saveOS()">💾 Salvar</button></div></div></div>
+<!-- MODAL OS COM ITENS DINÂMICOS -->
+<div class="modal-overlay" id="mOS"><div class="modal modal-xl"><div class="mh"><h2 id="mOSH">Nova Ordem de Serviço</h2><button class="mx" onclick="clM('mOS')">✕</button></div><div class="mb"><input type="hidden" id="osId"><div class="fg2" style="margin-bottom:16px"><div class="fg"><label>Nº OS</label><input type="text" id="osNm" readonly style="background:var(--bg)"></div><div class="fg"><label>Cliente *</label><input type="text" id="osCIn" placeholder="Digite para buscar..." oninput="fCliOS()" onfocus="$('osCDr').style.display='block'" autocomplete="off"><input type="hidden" id="osCId"><div id="osCDr" style="display:none;position:relative"><div style="position:absolute;top:0;left:0;right:0;background:var(--bg2);border:1px solid var(--bd);border-radius:8px;max-height:180px;overflow-y:auto;z-index:10;box-shadow:var(--shadow-lg)" id="osCLs"></div></div></div><div class="fg"><label>Status</label><select id="osSt"><option>Aberta</option><option>Em andamento</option><option>Aguardando cliente</option><option>Concluída</option><option>Paga</option><option>Devendo</option><option>Cancelada</option></select></div><div class="fg"><label>Emissão</label><input type="date" id="osEm"></div><div class="fg"><label>Vencimento (Auto +15d)</label><input type="date" id="osVn"></div><div class="fg"><label>Forma Pgto</label><select id="osFP"><option value="">—</option><option>Pix</option><option>Dinheiro</option><option>Cartão</option><option>Boleto</option><option>Transferência</option></select></div><div class="fg full"><label>Observações</label><textarea id="osOb" rows="2"></textarea></div></div><h3 style="font-size:14px;margin-bottom:8px">📦 Itens / Serviços da OS</h3><div class="table-wrap"><table class="os-items-table"><thead><tr><th>Serviço</th><th>Descrição</th><th>Valor Unit.</th><th>Qtd</th><th>Total</th><th></th></tr></thead><tbody id="osItB"></tbody></table></div><button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="addOSIt()">➕ Adicionar Item</button><div class="os-totals"><div class="row"><span>Subtotal:</span><span id="osSb">R$ 0,00</span></div><div class="row"><span>Desconto:</span><div class="ig" style="width:130px"><span class="pfx" style="padding:4px 8px;font-size:11px">R$</span><input type="text" id="osDc" value="0,00" oninput="mM(this);cOST()" style="padding:4px 8px;text-align:right"></div></div><div class="row total"><span>Valor Final:</span><span id="osFn">R$ 0,00</span></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mOS')">Cancelar</button><button class="btn btn-primary" onclick="saveOS()">💾 Salvar OS</button></div></div></div>
 
-<!-- MODAL EQUIPAMENTO -->
-<div class="modal-overlay" id="mEq"><div class="modal modal-lg"><div class="mh"><h2 id="mEqH">Novo Equipamento</h2><button class="mx" onclick="clM('mEq')">✕</button></div><div class="mb"><input type="hidden" id="eqId"><input type="hidden" id="eqFoto"><div class="fg2"><div class="fg"><label>Cliente</label><select id="eqCliSel"></select></div><div class="fg"><label>Tipo</label><select id="eqTipo" onchange="autoSearch()"><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Roteador</option></select></div><div class="fg"><label>Marca</label><input type="text" id="eqMarca" onblur="autoSearch()"></div><div class="fg"><label>Modelo</label><input type="text" id="eqModelo" onblur="autoSearch()"></div><div class="fg full"><label>Foto do Produto</label><div style="display:flex;gap:12px;align-items:center"><div id="eqPhotoPrev" style="width:70px;height:70px;border-radius:8px;border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)"><span style="font-size:24px">💻</span></div><button type="button" class="btn btn-outline btn-sm" onclick="searchPhotos()">🔍 Buscar Fotos</button></div><div class="eq-thumb-grid" id="eqThumbGrid"></div></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mEq')">Cancelar</button><button class="btn btn-primary" onclick="saveEq()">💾 Salvar</button></div></div></div>
+<!-- MODAL IMPRESSÃO OS -->
+<div class="modal-overlay" id="mOSD"><div class="modal modal-lg"><div class="mh"><h2>Visualização da OS</h2><button class="mx" onclick="clM('mOSD')">✕</button></div><div class="mb" id="osDB"></div><div class="mf"><button class="btn btn-outline" onclick="clM('mOSD')">Fechar</button><button class="btn btn-primary" id="osDP">🖨️ Imprimir OS</button></div></div></div>
+
+<!-- MODAL EQUIPAMENTO COM FOTOS E ABAS -->
+<div class="modal-overlay" id="mEq"><div class="modal modal-xl"><div class="mh"><h2 id="mEqH">Novo Equipamento</h2><button class="mx" onclick="clM('mEq')">✕</button></div><div class="mb"><input type="hidden" id="eqId"><input type="hidden" id="eqFoto">
+<div class="tabs"><div class="tab active" onclick="sTab(this,'et')">Identificação</div><div class="tab" onclick="sTab(this,'et')">Hardware</div><div class="tab" onclick="sTab(this,'et')">Rede/Sistema</div><div class="tab" onclick="sTab(this,'et')">Controle & Garantia</div></div>
+<div class="tc et active"><div class="fg2">
+<div class="fg"><label>Cliente Proprietário *</label><select id="eqCli"><option value="">Selecione...</option></select></div>
+<div class="fg"><label>Tipo</label><select id="eqTipo" onchange="autoSearch()"><option>Desktop</option><option>Notebook</option><option>Servidor</option><option>Impressora</option><option>Monitor</option><option>Roteador</option><option>Switch</option><option>Outro</option></select></div>
+<div class="fg"><label>Patrimônio</label><input type="text" id="eqPat"></div>
+<div class="fg"><label>Marca</label><input type="text" id="eqMarca" onblur="autoSearch()"></div>
+<div class="fg"><label>Modelo</label><input type="text" id="eqModelo" onblur="autoSearch()"></div>
+<div class="fg"><label>Nº Série</label><input type="text" id="eqNS"></div>
+<div class="fg"><label>Usuário Responsável</label><input type="text" id="eqUsr"></div>
+<div class="fg"><label>Setor / Localização</label><input type="text" id="eqSetor"></div>
+<div class="fg"><label>Status</label><select id="eqSt2"><option>Ativo</option><option>Em manutenção</option><option>Reserva</option><option>Inativo</option></select></div>
+<div class="fg full"><label>📸 Foto do Produto (Busca Automática)</label><div class="eq-photo-area"><div class="eq-photo-preview" id="eqPhotoPrev"><span style="font-size:36px">💻</span></div><div style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="searchPhotos()">🔍 Buscar Fotos do Modelo</button><div class="eq-thumb-grid" id="eqThumbGrid"></div></div></div></div>
+</div></div>
+<div class="tc et"><div class="fg2"><div class="fg"><label>Processador</label><input type="text" id="eqProc"></div><div class="fg"><label>RAM</label><input type="text" id="eqRAM"></div><div class="fg"><label>Armazenamento (HD/SSD)</label><input type="text" id="eqHD"></div><div class="fg"><label>Placa de Vídeo</label><input type="text" id="eqGPU"></div></div></div>
+<div class="tc et"><div class="fg2"><div class="fg"><label>Sistema Operacional</label><input type="text" id="eqSO"></div><div class="fg"><label>Versão SO</label><input type="text" id="eqSOV"></div><div class="fg"><label>Hostname</label><input type="text" id="eqHost"></div><div class="fg"><label>Endereço IP</label><input type="text" id="eqIP"></div><div class="fg"><label>MAC Address</label><input type="text" id="eqMAC"></div></div></div>
+<div class="tc et"><div class="fg2"><div class="fg"><label>Data de Aquisição</label><input type="date" id="eqDA"></div><div class="fg"><label>Garantia Até</label><input type="date" id="eqGA"></div><div class="fg"><label>Próxima Manutenção</label><input type="date" id="eqPM"></div><div class="fg full"><label>Observações</label><textarea id="eqOb"></textarea></div></div></div>
+</div><div class="mf"><button class="btn btn-outline" onclick="clM('mEq')">Cancelar</button><button class="btn btn-primary" onclick="saveEq()">💾 Salvar Equipamento</button></div></div></div>
+
+<!-- MODAL MANUTENÇÃO -->
+<div class="modal-overlay" id="mMn"><div class="modal modal-lg"><div class="mh"><h2 id="mMnH">Nova Manutenção</h2><button class="mx" onclick="clM('mMn')">✕</button></div><div class="mb"><input type="hidden" id="manId"><div class="fg2"><div class="fg full"><label>Equipamento *</label><select id="manEq"><option value="">Selecione...</option></select></div><div class="fg"><label>Data</label><input type="date" id="manDt"></div><div class="fg"><label>Tipo</label><select id="manTp"><option>Preventiva</option><option>Corretiva</option><option>Upgrade</option><option>Limpeza</option><option>Formatação</option></select></div><div class="fg"><label>Técnico</label><input type="text" id="manTc"></div><div class="fg"><label>Status</label><select id="manSt"><option>Concluída</option><option>Aberta</option><option>Em andamento</option></select></div><div class="fg"><label>Valor</label><div class="ig"><span class="pfx">R$</span><input type="text" id="manVl" placeholder="0,00" oninput="mM(this)"></div></div><div class="fg full"><label>Serviço Realizado</label><textarea id="manSv" rows="2"></textarea></div><div class="fg full"><label>Problema Relatado</label><textarea id="manPb" rows="2"></textarea></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mMn')">Cancelar</button><button class="btn btn-primary" onclick="saveMn()">💾 Salvar Manutenção</button></div></div></div>
+
+<!-- MODAL USUÁRIO -->
+<div class="modal-overlay" id="mUsr"><div class="modal modal-lg"><div class="mh"><h2 id="mUsrH">Novo Usuário</h2><button class="mx" onclick="clM('mUsr')">✕</button></div><div class="mb"><input type="hidden" id="usrId"><div class="fg2"><div class="fg"><label>Nome *</label><input type="text" id="uNm" oninput="aLogin()"></div><div class="fg"><label>Empresa</label><input type="text" id="uEm" oninput="aLogin()"></div><div class="fg"><label>Login (Auto)</label><input type="text" id="uLg" readonly style="background:var(--bg)"></div><div class="fg"><label>Senha (Gerada)</label><div style="display:flex;gap:6px"><input type="text" id="uPw" readonly style="background:var(--bg);flex:1"><button class="btn btn-outline btn-xs" onclick="gPwd()">🔄</button></div></div><div class="fg"><label>Perfil</label><select id="uPf" onchange="uPerm()"><option>Administrador</option><option>Técnico</option><option>Cliente</option></select></div><div class="fg full"><label>Permissões de Acesso</label><div class="ck" id="pCK"></div></div></div></div><div class="mf"><button class="btn btn-outline" onclick="clM('mUsr')">Cancelar</button><button class="btn btn-primary" onclick="saveUsr()">💾 Salvar</button></div></div></div>
 
 <div class="toast-container" id="toasts"></div>
 
 <script>
-// =======================================================
-// CONEXÃO DIRETA COM O SUPABASE VIA REST (SEM DEPENDÊNCIAS)
-// =======================================================
-let SUPA_URL = localStorage.getItem('cfg_supa_url') || "https://umzromnmsackakaajgji.supabase.co";
-let SUPA_KEY = localStorage.getItem('cfg_supa_key') || "";
+// ==========================================
+// BANCO NATIVO SUPABASE REST (SEM CDN EXTERNO)
+// ==========================================
+let SUPA_URL = "https://umzromnmsackakaajgji.supabase.co";
+let SUPA_KEY = "sb_publishable_fZMRKkVLkHeHtzfnmLnHpA_QlCWE-ub";
 
 const DB = {
     async select(table) {
-        if (SUPA_KEY && SUPA_KEY.startsWith('eyJ')) {
+        if (SUPA_KEY) {
             try {
                 const res = await fetch(`${SUPA_URL}/rest/v1/${table}?select=*`, {
                     headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
@@ -269,16 +392,11 @@ const DB = {
         return JSON.parse(localStorage.getItem(table) || '[]');
     },
     async insert(table, record) {
-        if (SUPA_KEY && SUPA_KEY.startsWith('eyJ')) {
+        if (SUPA_KEY) {
             try {
                 await fetch(`${SUPA_URL}/rest/v1/${table}`, {
                     method: 'POST',
-                    headers: { 
-                        'apikey': SUPA_KEY, 
-                        'Authorization': `Bearer ${SUPA_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
-                    },
+                    headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify(record)
                 });
             } catch(e) {}
@@ -288,15 +406,11 @@ const DB = {
         localStorage.setItem(table, JSON.stringify(local));
     },
     async update(table, id, record) {
-        if (SUPA_KEY && SUPA_KEY.startsWith('eyJ')) {
+        if (SUPA_KEY) {
             try {
                 await fetch(`${SUPA_URL}/rest/v1/${table}?id=eq.${id}`, {
                     method: 'PATCH',
-                    headers: { 
-                        'apikey': SUPA_KEY, 
-                        'Authorization': `Bearer ${SUPA_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify(record)
                 });
             } catch(e) {}
@@ -311,19 +425,27 @@ const DB = {
 const $ = id => document.getElementById(id);
 const uid = () => '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
 const td = () => new Date().toISOString().slice(0, 10);
+const nw = () => new Date().toISOString();
 const esc = t => { const d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; };
 const R$ = v => 'R$ ' + (parseFloat(v) || 0).toFixed(2).replace('.', ',');
+const fD = d => d ? new Date(d + 'T12:00:00').toLocaleDateString('pt-BR') : '—';
+const fDH = d => d ? new Date(d).toLocaleString('pt-BR') : '—';
 const bc = s => 'badge badge-' + (s || 'ativo').toLowerCase().replace(/\s+/g, '-');
 const wl = n => 'https://wa.me/55' + (n || '').replace(/\D/g, '');
 
 function mM(el){ let v=el.value.replace(/\D/g,''); v=(parseInt(v)||0)/100; el.value=v.toFixed(2).replace('.',','); }
 function pM(s){ return parseFloat((s||'0').replace(/\./g,'').replace(',','.'))||0; }
+function mT(el){ let v=el.value.replace(/\D/g,'').slice(0,4); if(v.length>=3) v=v.slice(0,-2)+':'+v.slice(-2); el.value=v; }
+
+let CU = null, lastCli = '', osIt = [], ss = {};
+const PERMS = ['clientes','novo_cliente','servicos','novo_servico','os','nova_os','equip','novo_equip','manut','relatorios'];
+const PL = {clientes:'Clientes',novo_cliente:'Novo Cli.',servicos:'Serviços',novo_servico:'Novo Svc.',os:'Ver OS',nova_os:'Nova OS',equip:'Equip.',novo_equip:'Novo Eq.',manut:'Manut.',relatorios:'Relatórios'};
 
 function toast(m, t='info'){
     const c = $('toasts');
     const el = document.createElement('div');
     el.className = 'toast toast-' + t;
-    el.innerHTML = ({success:'✅', error:'❌', info:'ℹ️'}[t]||'') + ' ' + m;
+    el.innerHTML = ({success:'✅', error:'❌', info:'ℹ️', warning:'⚠️'}[t]||'') + ' ' + m;
     c.appendChild(el);
     setTimeout(() => el.remove(), 3000);
 }
@@ -331,15 +453,22 @@ function toast(m, t='info'){
 function opM(id){ $(id).classList.add('active'); }
 function clM(id){ $(id).classList.remove('active'); }
 function toggleSB(){ $('sidebar').classList.toggle('open'); $('sOv').classList.toggle('open'); }
+function sTab(t,c){ t.parentElement.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active'); const i=[...t.parentElement.children].indexOf(t); const b=t.closest('.mb'); b.querySelectorAll('.tc.'+c).forEach((x,j)=>x.classList.toggle('active',j===i)); }
 
-// LOGIN IMEDIATO
+function srt(m,f){ if(!ss[m])ss[m]={f,d:1}; else if(ss[m].f===f)ss[m].d*=-1; else ss[m]={f,d:1}; uAll(); }
+function doSrt(a,m){ const x=ss[m]; if(!x)return a; return [...a].sort((a,b)=>((a[x.f]||'').toString()).localeCompare((b[x.f]||'').toString(),'pt')*x.d); }
+
+// ==========================================
+// LOGIN & PERMISSÕES
+// ==========================================
 function doLogin(){
     const l = $('loginUser').value.trim();
     const p = $('loginPass').value;
     if (l === 'admin' && p === 'admin') {
         $('loginPage').style.display = 'none';
         $('app').style.display = 'block';
-        toast('Login realizado com sucesso!', 'success');
+        toast('Bem-vindo ao Sistema!', 'success');
+        ldCfg();
         uAll();
     } else {
         toast('Usuário ou senha incorretos!', 'error');
@@ -366,47 +495,69 @@ document.querySelectorAll('.sidebar a[data-page]').forEach(a => {
     });
 });
 
-// CLIENTES
+// ==========================================
+// CLIENTES (ABAS + CEP + WHATSAPP)
+// ==========================================
 async function rCli(){
-    const list = await DB.select('tbl_clientes');
-    $('cliTB').innerHTML = list.length ? list.map(x => `
+    let c = await DB.select('tbl_clientes');
+    const q = ($('cliQ')?.value || '').toLowerCase();
+    const st = $('cliSF')?.value || '';
+    if (q) c = c.filter(x => (x.nome || '').toLowerCase().includes(q) || (x.cpf_cnpj || '').includes(q));
+    if (st) c = c.filter(x => x.status === st);
+    c = doSrt(c, 'cli');
+    $('cliTB').innerHTML = c.length ? c.map(x => `
         <tr>
             <td><strong>${esc(x.nome)}</strong></td>
+            <td>${esc(x.cpf_cnpj || '—')}</td>
             <td>${esc(x.telefone || '—')}</td>
             <td>${x.whatsapp ? `<a href="${wl(x.whatsapp)}" target="_blank" class="btn-icon whatsapp">💬</a>` : '—'}</td>
-            <td>${esc(x.email || '—')}</td>
             <td>${esc(x.cidade || '—')}</td>
             <td><span class="${bc(x.status)}">${x.status}</span></td>
             <td><button class="btn-icon" onclick="editCli('${x.id}')">✏️</button></td>
         </tr>
-    `).join('') : '<tr><td colspan="7" style="text-align:center;padding:20px">Nenhum cliente cadastrado</td></tr>';
+    `).join('') : '<tr><td colspan="7" style="text-align:center;padding:20px">Nenhum cliente</td></tr>';
 }
 
 function openCliM(){
     $('cliId').value = '';
     $('mCliH').textContent = 'Novo Cliente';
-    ['cNm','cDc','cTl','cWh','cEm','cCEP','cCd','cLg'].forEach(f => $(f).value = '');
+    ['cNm','cFn','cDc','cTl','cWh','cEm','cOb','cCEP','cLg','cNr','cCp','cBr','cCd','cUF','cRs','cCg','cRT','cRW','cRM'].forEach(f => $(f).value = '');
     opM('mCli');
 }
 
 async function saveCli(){
     const nome = $('cNm').value.trim();
-    if (!nome) return toast('Nome é obrigatório!', 'error');
+    if (!nome) return toast('Nome obrigatório!', 'error');
     const id = $('cliId').value || uid();
     const data = {
         id,
         nome,
+        tipo_cliente: $('cTp').value,
+        nome_fantasia: $('cFn').value.trim(),
         cpf_cnpj: $('cDc').value.trim(),
         telefone: $('cTl').value.trim(),
         whatsapp: $('cWh').value.trim(),
         email: $('cEm').value.trim(),
-        cidade: $('cCd').value.trim(),
+        cep: $('cCEP').value.trim(),
         logradouro: $('cLg').value.trim(),
-        status: 'Ativo'
+        numero: $('cNr').value.trim(),
+        complemento: $('cCp').value.trim(),
+        bairro: $('cBr').value.trim(),
+        cidade: $('cCd').value.trim(),
+        estado: $('cUF').value.trim().toUpperCase(),
+        responsavel: $('cRs').value.trim(),
+        status: $('cSt').value,
+        observacoes: $('cOb').value.trim()
     };
-    if ($('cliId').value) await DB.update('tbl_clientes', id, data);
-    else await DB.insert('tbl_clientes', data);
-    toast('Cliente salvo com sucesso!', 'success');
+    if ($('cliId').value) {
+        await DB.update('tbl_clientes', id, data);
+        toast('Cliente atualizado!', 'success');
+    } else {
+        await DB.insert('tbl_clientes', data);
+        lastCli = id;
+        toast('Cliente cadastrado na nuvem!', 'success');
+        opM('mCliP');
+    }
     clM('mCli');
     rCli();
 }
@@ -418,35 +569,62 @@ async function editCli(id){
     $('cliId').value = c.id;
     $('mCliH').textContent = 'Editar Cliente';
     $('cNm').value = c.nome;
+    $('cTp').value = c.tipo_cliente || 'Pessoa Física';
+    $('cSt').value = c.status || 'Ativo';
+    $('cFn').value = c.nome_fantasia || '';
     $('cDc').value = c.cpf_cnpj || '';
     $('cTl').value = c.telefone || '';
     $('cWh').value = c.whatsapp || '';
     $('cEm').value = c.email || '';
     $('cCEP').value = c.cep || '';
-    $('cCd').value = c.cidade || '';
     $('cLg').value = c.logradouro || '';
+    $('cNr').value = c.numero || '';
+    $('cCp').value = c.complemento || '';
+    $('cBr').value = c.bairro || '';
+    $('cCd').value = c.cidade || '';
+    $('cUF').value = c.estado || '';
+    $('cRs').value = c.responsavel || '';
+    $('cOb').value = c.observacoes || '';
     opM('mCli');
 }
 
+function bCEP(v){
+    v = (v || '').replace(/\D/g, '');
+    if (v.length !== 8) return;
+    fetch(`https://viacep.com.br/ws/${v}/json/`).then(r => r.json()).then(d => {
+        if (!d.erro) {
+            $('cLg').value = d.logradouro || '';
+            $('cBr').value = d.bairro || '';
+            $('cCd').value = d.localidade || '';
+            $('cUF').value = d.uf || '';
+            toast('Endereço carregado via CEP!', 'success');
+        }
+    });
+}
+
+// ==========================================
 // SERVIÇOS
+// ==========================================
 async function rSvc(){
     const list = await DB.select('tbl_servicos');
     $('svcTB').innerHTML = list.length ? list.map(x => `
         <tr>
             <td><strong>${esc(x.codigo)}</strong></td>
             <td>${esc(x.descricao)}</td>
+            <td>${esc(x.categoria || '—')}</td>
             <td>${R$(x.valor_unitario)}</td>
+            <td>${esc(x.tempo_estimado || '—')}</td>
             <td><span class="${bc(x.status)}">${x.status}</span></td>
             <td><button class="btn-icon" onclick="editSvc('${x.id}')">✏️</button></td>
         </tr>
-    `).join('') : '<tr><td colspan="5" style="text-align:center;padding:20px">Nenhum serviço</td></tr>';
+    `).join('') : '<tr><td colspan="7" style="text-align:center;padding:20px">Nenhum serviço</td></tr>';
 }
 
 function openSvcM(){
     $('svcId').value = '';
-    $('sCd').value = '';
-    $('sDc').value = '';
-    $('sVl').value = '';
+    $('mSvcH').textContent = 'Novo Serviço';
+    ['sCd','sDc','sVl','sTm'].forEach(f => $(f).value = '');
+    $('sSt').value = 'Ativo';
     opM('mSvc');
 }
 
@@ -454,7 +632,15 @@ async function saveSvc(){
     const cod = $('sCd').value.trim(), desc = $('sDc').value.trim();
     if (!cod || !desc) return toast('Preencha os campos!', 'error');
     const id = $('svcId').value || uid();
-    const data = { id, codigo: cod, descricao: desc, valor_unitario: pM($('sVl').value), status: 'Ativo' };
+    const data = {
+        id,
+        codigo: cod,
+        descricao: desc,
+        categoria: $('sCt').value,
+        valor_unitario: pM($('sVl').value),
+        tempo_estimado: $('sTm').value.trim(),
+        status: $('sSt').value
+    };
     if ($('svcId').value) await DB.update('tbl_servicos', id, data);
     else await DB.insert('tbl_servicos', data);
     toast('Serviço salvo!', 'success');
@@ -467,113 +653,250 @@ async function editSvc(id){
     const s = list.find(x => x.id === id);
     if (!s) return;
     $('svcId').value = s.id;
+    $('mSvcH').textContent = 'Editar Serviço';
     $('sCd').value = s.codigo;
     $('sDc').value = s.descricao;
+    $('sCt').value = s.categoria || 'Outro';
     $('sVl').value = (s.valor_unitario || 0).toFixed(2).replace('.', ',');
+    $('sTm').value = s.tempo_estimado || '';
+    $('sSt').value = s.status || 'Ativo';
     opM('mSvc');
 }
 
-// OS
+// ==========================================
+// ORDENS DE SERVIÇO (ITENS + CÁLCULOS + PRINT)
+// ==========================================
 async function rOS(){
     const list = await DB.select('tbl_os');
     const cli = await DB.select('tbl_clientes');
     const cm = Object.fromEntries(cli.map(c => [c.id, c.nome]));
     $('osTB').innerHTML = list.length ? list.map(x => `
         <tr>
-            <td><strong>${esc(x.numero_os)}</strong></td>
+            <td><strong style="cursor:pointer" onclick="viewOS('${x.id}')">${esc(x.numero_os)}</strong></td>
             <td>${esc(cm[x.id_cliente] || '—')}</td>
-            <td>${x.data_emissao || '—'}</td>
+            <td>${fD(x.data_emissao)}</td>
+            <td>${fD(x.data_vencimento)}</td>
             <td><span class="${bc(x.status)}">${x.status}</span></td>
+            <td>${R$(x.total)}</td>
             <td><strong>${R$(x.valor_final)}</strong></td>
-            <td><button class="btn-icon" onclick="editOS('${x.id}')">✏️</button></td>
+            <td><div style="display:flex;gap:4px"><button class="btn-icon" onclick="viewOS('${x.id}')">👁️</button><button class="btn-icon" onclick="editOS('${x.id}')">✏️</button></div></td>
         </tr>
-    `).join('') : '<tr><td colspan="6" style="text-align:center;padding:20px">Nenhuma OS</td></tr>';
+    `).join('') : '<tr><td colspan="8" style="text-align:center;padding:20px">Nenhuma OS cadastrada</td></tr>';
 }
+
+async function fCliOS(){
+    const q = $('osCIn').value.toLowerCase();
+    const l = $('osCLs');
+    const cls = (await DB.select('tbl_clientes')).filter(c => c.status === 'Ativo' && (c.nome || '').toLowerCase().includes(q)).slice(0,8);
+    l.innerHTML = cls.map(c => `
+        <div style="padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--bd2);color:var(--tx)" onmousedown="$('osCIn').value='${esc(c.nome)}';$('osCId').value='${c.id}';$('osCDr').style.display='none'">
+            ${esc(c.nome)}
+        </div>
+    `).join('') || '<div style="padding:12px;color:var(--tx3)">Nenhum cliente</div>';
+    $('osCDr').style.display = 'block';
+}
+
+document.addEventListener('click', e => { if (!e.target.closest('#osCIn') && !e.target.closest('#osCDr')) $('osCDr').style.display = 'none'; });
 
 async function openOSM(){
     $('osId').value = '';
-    $('osNm').value = 'OS' + Math.floor(1000 + Math.random() * 9000);
-    $('osVlF').value = '';
+    $('mOSH').textContent = 'Nova OS';
+    const cfg = JSON.parse(localStorage.getItem('sg_cfg') || '{}');
+    $('osNm').value = (cfg.prefixo || 'OS') + Math.floor(1000 + Math.random() * 9000);
+    $('osEm').value = td();
+    $('osVn').value = '';
+    $('osSt').value = 'Aberta';
+    $('osFP').value = '';
     $('osOb').value = '';
-    const cli = await DB.select('tbl_clientes');
-    $('osCliSel').innerHTML = cli.map(c => `<option value="${c.id}">${esc(c.nome)}</option>`).join('');
+    $('osDc').value = '0,00';
+    $('osCIn').value = '';
+    $('osCId').value = '';
+    osIt = [];
+    rOSIt();
     opM('mOS');
 }
 
+function addOSIt(){
+    osIt.push({ id: uid(), id_servico: '', descricao: '', valor_unitario: 0, quantidade: 1, total_item: 0 });
+    rOSIt();
+}
+
+async function rOSIt(){
+    const svcs = await DB.select('tbl_servicos');
+    $('osItB').innerHTML = osIt.map((it, i) => `
+        <tr>
+            <td><select onchange="osISvc(${i},this.value)" style="min-width:120px"><option value="">Selecione...</option>${svcs.map(s => `<option value="${s.id}" ${s.id === it.id_servico ? 'selected' : ''}>${esc(s.codigo)}</option>`).join('')}</select></td>
+            <td><input type="text" value="${esc(it.descricao)}" onchange="osIt[${i}].descricao=this.value" style="min-width:120px"></td>
+            <td><div class="ig" style="min-width:90px"><span class="pfx" style="padding:4px 6px;font-size:10px">R$</span><input type="text" value="${(it.valor_unitario || 0).toFixed(2).replace('.', ',')}" oninput="mM(this)" onchange="osIt[${i}].valor_unitario=pM(this.value);cOST()" style="width:65px;text-align:right"></div></td>
+            <td><input type="number" min="1" value="${it.quantidade}" onchange="osIt[${i}].quantidade=parseInt(this.value)||1;cOST()" style="width:50px"></td>
+            <td><strong>${R$(it.valor_unitario * it.quantidade)}</strong></td>
+            <td><button class="btn-icon danger btn-xs" onclick="osIt.splice(${i},1);rOSIt()">✕</button></td>
+        </tr>
+    `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--tx3);padding:14px">Clique em "+ Adicionar Item"</td></tr>';
+    cOST();
+}
+
+async function osISvc(i, sid){
+    const sv = (await DB.select('tbl_servicos')).find(s => s.id === sid);
+    if (sv) {
+        osIt[i].id_servico = sid;
+        osIt[i].descricao = sv.descricao;
+        osIt[i].valor_unitario = sv.valor_unitario || 0;
+    }
+    rOSIt();
+}
+
+function cOST(){
+    let sub = 0;
+    osIt.forEach(i => { i.total_item = (i.valor_unitario || 0) * (i.quantidade || 1); sub += i.total_item; });
+    $('osSb').textContent = R$(sub);
+    $('osFn').textContent = R$(sub - pM($('osDc').value));
+}
+
 async function saveOS(){
-    const cliId = $('osCliSel').value;
+    const cliId = $('osCId').value;
     if (!cliId) return toast('Selecione um cliente!', 'error');
     const id = $('osId').value || uid();
+    let sub = 0;
+    osIt.forEach(i => { i.total_item = (i.valor_unitario || 0) * (i.quantidade || 1); sub += i.total_item; });
+    const d = pM($('osDc').value);
+    let v = $('osVn').value;
+    const e = $('osEm').value;
+    if (!v && e) {
+        const dt = new Date(e + 'T12:00:00');
+        dt.setDate(dt.getDate() + 15);
+        v = dt.toISOString().slice(0, 10);
+    }
     const data = {
         id,
         numero_os: $('osNm').value,
         id_cliente: cliId,
         status: $('osSt').value,
-        valor_final: pM($('osVlF').value),
-        data_emissao: td(),
+        total: sub,
+        desconto: d,
+        valor_final: sub - d,
+        data_emissao: e,
+        data_vencimento: v,
+        forma_pagamento: $('osFP').value,
         obs: $('osOb').value.trim()
     };
     if ($('osId').value) await DB.update('tbl_os', id, data);
     else await DB.insert('tbl_os', data);
-    toast('OS salva!', 'success');
+    toast('OS salva na nuvem!', 'success');
     clM('mOS');
     rOS();
 }
 
-async function editOS(id){
-    const list = await DB.select('tbl_os');
-    const o = list.find(x => x.id === id);
+async function viewOS(id){
+    const o = (await DB.select('tbl_os')).find(x => x.id === id);
     if (!o) return;
-    $('osId').value = o.id;
-    $('osNm').value = o.numero_os;
-    $('osSt').value = o.status;
-    $('osVlF').value = (o.valor_final || 0).toFixed(2).replace('.', ',');
-    $('osOb').value = o.obs || '';
-    const cli = await DB.select('tbl_clientes');
-    $('osCliSel').innerHTML = cli.map(c => `<option value="${c.id}" ${c.id === o.id_cliente ? 'selected' : ''}>${esc(c.nome)}</option>`).join('');
-    opM('mOS');
+    const cl = (await DB.select('tbl_clientes')).find(c => c.id === o.id_cliente);
+    const cfg = JSON.parse(localStorage.getItem('sg_cfg') || '{}');
+    let h = `
+        <div id="osPR"><div class="rpt-preview">
+            <div style="text-align:center;border-bottom:2px solid #333;padding-bottom:12px;margin-bottom:16px">
+                ${cfg.logo ? `<img src="${cfg.logo}" style="max-height:50px"><br>` : ''}
+                <h1 style="color:#333;font-size:20px">${esc(cfg.empresa || 'Empresa de TI')}</h1>
+                <p style="color:#666;font-size:12px">${[cfg.telefone, cfg.email].filter(Boolean).join(' · ')}</p>
+                <h2 style="margin-top:8px;font-size:18px;color:#2563eb">ORDEM DE SERVIÇO — ${esc(o.numero_os)}</h2>
+            </div>
+            <div class="dg" style="margin-bottom:16px">
+                <div class="di"><label>Cliente</label><p style="color:#333">${esc(cl?.nome || '—')}</p></div>
+                <div class="di"><label>CPF/CNPJ</label><p style="color:#333">${esc(cl?.cpf_cnpj || '—')}</p></div>
+                <div class="di"><label>Emissão</label><p style="color:#333">${fD(o.data_emissao)}</p></div>
+                <div class="di"><label>Vencimento</label><p style="color:#333">${fD(o.data_vencimento)}</p></div>
+                <div class="di"><label>Status</label><p><span class="${bc(o.status)}">${o.status}</span></p></div>
+                <div class="di"><label>Forma de Pgto</label><p style="color:#333">${esc(o.forma_pagamento || '—')}</p></div>
+            </div>
+            <div style="background:#f9f9f9;padding:16px;border-radius:8px;margin-top:16px">
+                <div style="display:flex;justify-content:space-between;color:#333"><span>Subtotal:</span><strong>${R$(o.total)}</strong></div>
+                <div style="display:flex;justify-content:space-between;color:#333"><span>Desconto:</span><strong>${R$(o.desconto)}</strong></div>
+                <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:800;border-top:2px solid #ddd;padding-top:6px;margin-top:6px;color:#2563eb"><span>TOTAL FINAL:</span><span>${R$(o.valor_final)}</span></div>
+            </div>
+            ${o.obs ? `<p style="margin-top:16px;font-size:12px;color:#666"><strong>Observações:</strong> ${esc(o.obs)}</p>` : ''}
+        </div></div>
+    `;
+    $('osDB').innerHTML = h;
+    $('osDP').onclick = () => {
+        const w = window.open('');
+        w.document.write('<html><head><title>' + o.numero_os + '</title><style>body{font-family:Arial;padding:20px;color:#333}.rpt-preview{max-width:800px;margin:0 auto}.dg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.di label{font-size:10px;text-transform:uppercase;color:#888}.di p{font-size:13px}</style></head><body>' + $('osPR').innerHTML + '</body></html>');
+        w.document.close();
+        setTimeout(() => w.print(), 300);
+    };
+    opM('mOSD');
 }
 
-// EQUIPAMENTOS COM FOTOS
+async function updVnc(){
+    const a = await DB.select('tbl_os');
+    let c = 0;
+    const h = td();
+    for (let o of a) {
+        if (o.data_vencimento && o.data_vencimento < h && ['Aberta','Em andamento'].includes(o.status)) {
+            await DB.update('tbl_os', o.id, { status: 'Devendo' });
+            c++;
+        }
+    }
+    toast(c + ' OS atualizadas para Devendo', 'warning');
+    rOS();
+}
+
+// ==========================================
+// EQUIPAMENTOS (FOTOS + ABAS)
+// ==========================================
 async function rEq(){
     const list = await DB.select('tbl_equipamentos');
     const cli = await DB.select('tbl_clientes');
     const cm = Object.fromEntries(cli.map(c => [c.id, c.nome]));
+    fSel('eqCF', cli, 'id', 'nome');
     $('eqTB').innerHTML = list.length ? list.map(x => `
         <tr>
             <td>${x.foto ? `<img src="${x.foto}" class="eq-list-thumb">` : `<div class="eq-list-thumb-ph">💻</div>`}</td>
             <td><strong>${esc(cm[x.id_cliente] || '—')}</strong></td>
             <td>${esc(x.tipo)}</td>
             <td>${esc(x.marca || '')} ${esc(x.modelo || '')}</td>
+            <td>${esc(x.numero_serie || '—')}</td>
             <td><span class="${bc(x.status)}">${x.status}</span></td>
+            <td>${fD(x.garantia_ate)}</td>
             <td><button class="btn-icon" onclick="editEq('${x.id}')">✏️</button></td>
         </tr>
-    `).join('') : '<tr><td colspan="6" style="text-align:center;padding:20px">Nenhum equipamento</td></tr>';
+    `).join('') : '<tr><td colspan="8" style="text-align:center;padding:20px">Nenhum equipamento</td></tr>';
 }
 
 async function openEqM(){
     $('eqId').value = '';
-    $('eqMarca').value = '';
-    $('eqModelo').value = '';
     $('eqFoto').value = '';
-    $('eqPhotoPrev').innerHTML = '<span style="font-size:24px">💻</span>';
+    $('mEqH').textContent = 'Novo Equipamento';
+    ['eqPat','eqMarca','eqModelo','eqNS','eqUsr','eqSetor','eqProc','eqRAM','eqHD','eqGPU','eqSO','eqSOV','eqHost','eqIP','eqMAC','eqDA','eqGA','eqPM','eqOb'].forEach(f => $(f).value = '');
+    $('eqPhotoPrev').innerHTML = '<span style="font-size:36px">💻</span>';
     $('eqThumbGrid').innerHTML = '';
     const cli = await DB.select('tbl_clientes');
-    $('eqCliSel').innerHTML = cli.map(c => `<option value="${c.id}">${esc(c.nome)}</option>`).join('');
+    fSel('eqCli', cli, 'id', 'nome', lastCli || '');
     opM('mEq');
 }
 
 async function saveEq(){
-    const cliId = $('eqCliSel').value;
+    const cliId = $('eqCli').value;
     if (!cliId) return toast('Selecione um cliente!', 'error');
     const id = $('eqId').value || uid();
     const data = {
         id,
         id_cliente: cliId,
         tipo: $('eqTipo').value,
+        patrimonio: $('eqPat').value.trim(),
         marca: $('eqMarca').value.trim(),
         modelo: $('eqModelo').value.trim(),
-        status: 'Ativo',
+        numero_serie: $('eqNS').value.trim(),
+        usuario: $('eqUsr').value.trim(),
+        setor: $('eqSetor').value.trim(),
+        status: $('eqSt2').value,
+        processador: $('eqProc').value.trim(),
+        ram: $('eqRAM').value.trim(),
+        armazenamento: $('eqHD').value.trim(),
+        sistema_operacional: $('eqSO').value.trim(),
+        ip: $('eqIP').value.trim(),
+        garantia_ate: $('eqGA').value || null,
+        proxima_manutencao: $('eqPM').value || null,
+        observacoes: $('eqOb').value.trim(),
         foto: $('eqFoto').value
     };
     if ($('eqId').value) await DB.update('tbl_equipamentos', id, data);
@@ -588,13 +911,27 @@ async function editEq(id){
     const e = list.find(x => x.id === id);
     if (!e) return;
     $('eqId').value = e.id;
+    $('mEqH').textContent = 'Editar Equipamento';
+    const cli = await DB.select('tbl_clientes');
+    fSel('eqCli', cli, 'id', 'nome', e.id_cliente);
     $('eqTipo').value = e.tipo;
+    $('eqPat').value = e.patrimonio || '';
     $('eqMarca').value = e.marca || '';
     $('eqModelo').value = e.modelo || '';
+    $('eqNS').value = e.numero_serie || '';
+    $('eqUsr').value = e.usuario || '';
+    $('eqSetor').value = e.setor || '';
+    $('eqSt2').value = e.status || 'Ativo';
+    $('eqProc').value = e.processador || '';
+    $('eqRAM').value = e.ram || '';
+    $('eqHD').value = e.armazenamento || '';
+    $('eqSO').value = e.sistema_operacional || '';
+    $('eqIP').value = e.ip || '';
+    $('eqGA').value = e.garantia_ate || '';
+    $('eqPM').value = e.proxima_manutencao || '';
+    $('eqOb').value = e.observacoes || '';
     $('eqFoto').value = e.foto || '';
     if (e.foto) $('eqPhotoPrev').innerHTML = `<img src="${e.foto}" style="width:100%;height:100%;object-fit:cover">`;
-    const cli = await DB.select('tbl_clientes');
-    $('eqCliSel').innerHTML = cli.map(c => `<option value="${c.id}" ${c.id === e.id_cliente ? 'selected' : ''}>${esc(c.nome)}</option>`).join('');
     opM('mEq');
 }
 
@@ -604,11 +941,11 @@ function autoSearch(){
 }
 
 async function searchPhotos(){
-    const termo = `${$('eqMarca').value} ${$('eqModelo').value} computer hardware`.trim();
+    const termo = `${$('eqMarca').value} ${$('eqModelo').value} hardware`.trim();
     const grid = $('eqThumbGrid');
-    grid.innerHTML = '<span style="font-size:12px">Buscando fotos...</span>';
+    grid.innerHTML = '<span style="font-size:12px">Buscando fotos na web...</span>';
     try {
-        const res = await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(termo)}&gsrlimit=4&prop=pageimages&pithumbsize=200&format=json&origin=*`);
+        const res = await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(termo)}&gsrlimit=5&prop=pageimages&pithumbsize=200&format=json&origin=*`);
         const d = await res.json();
         let fotos = [];
         if (d.query?.pages) {
@@ -626,35 +963,163 @@ function selPhoto(url){
     $('eqPhotoPrev').innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
 }
 
-function bCEP(v){
-    v = (v || '').replace(/\D/g, '');
-    if (v.length !== 8) return;
-    fetch(`https://viacep.com.br/ws/${v}/json/`).then(r => r.json()).then(d => {
-        if (!d.erro) {
-            $('cLg').value = d.logradouro || '';
-            $('cCd').value = d.localidade || '';
-            toast('Endereço carregado via CEP!', 'success');
-        }
+// ==========================================
+// MANUTENÇÕES
+// ==========================================
+async function rMn(){
+    const list = await DB.select('tbl_manutencoes');
+    const eq = await DB.select('tbl_equipamentos');
+    const em = Object.fromEntries(eq.map(e => [e.id, `${e.tipo} ${e.marca || ''}`]));
+    $('manTB').innerHTML = list.length ? list.map(x => `
+        <tr>
+            <td>${esc(em[x.id_equipamento] || '—')}</td>
+            <td>${fD(x.data)}</td>
+            <td><span class="${bc(x.tipo)}">${x.tipo}</span></td>
+            <td>${esc(x.tecnico || '—')}</td>
+            <td><span class="${bc(x.status)}">${x.status}</span></td>
+            <td>${R$(x.valor)}</td>
+            <td><button class="btn-icon" onclick="editMn('${x.id}')">✏️</button></td>
+        </tr>
+    `).join('') : '<tr><td colspan="7" style="text-align:center;padding:20px">Nenhuma manutenção</td></tr>';
+}
+
+async function openManM(){
+    $('manId').value = '';
+    $('mMnH').textContent = 'Nova Manutenção';
+    ['manTc','manPb','manSv'].forEach(f => $(f).value = '');
+    $('manDt').value = td();
+    $('manVl').value = '';
+    const eq = await DB.select('tbl_equipamentos');
+    fSel('manEq', eq, 'id', e => `${e.tipo} ${e.marca || ''} ${e.modelo || ''}`);
+    opM('mMn');
+}
+
+async function saveMn(){
+    const eid = $('manEq').value;
+    if (!eid) return toast('Selecione um equipamento!', 'error');
+    const id = $('manId').value || uid();
+    const data = {
+        id,
+        id_equipamento: eid,
+        data: $('manDt').value,
+        tipo: $('manTp').value,
+        tecnico: $('manTc').value.trim(),
+        problema: $('manPb').value.trim(),
+        servico_realizado: $('manSv').value.trim(),
+        valor: pM($('manVl').value),
+        status: $('manSt').value
+    };
+    if ($('manId').value) await DB.update('tbl_manutencoes', id, data);
+    else await DB.insert('tbl_manutencoes', data);
+    toast('Manutenção salva!', 'success');
+    clM('mMn');
+    rMn();
+}
+
+// ==========================================
+// RELATÓRIOS COMPLETOS
+// ==========================================
+function updRF(){
+    const t = $('relT').value;
+    const dtF = `<div class="fg"><label>Data Inicial</label><input type="date" id="rDI"></div><div class="fg"><label>Data Final</label><input type="date" id="rDF"></div>`;
+    $('relF').innerHTML = dtF;
+    $('relR').innerHTML = '';
+}
+updRF();
+
+async function genRel(){
+    const t = $('relT').value;
+    const di = $('rDI')?.value || '';
+    const df = $('rDF')?.value || '';
+    let os = await DB.select('tbl_os');
+    const clis = await DB.select('tbl_clientes');
+    const cm = Object.fromEntries(clis.map(c => [c.id, c.nome]));
+    
+    if (di) os = os.filter(o => (o.data_emissao || '') >= di);
+    if (df) os = os.filter(o => (o.data_emissao || '') <= df);
+    
+    let h = '';
+    if (t === 'os_periodo') {
+        const tot = os.reduce((s, o) => s + (o.valor_final || 0), 0);
+        h = `<h3>${os.length} OS no Período — Total: ${R$(tot)}</h3><table style="margin-top:10px"><thead><tr><th>Nº OS</th><th>Cliente</th><th>Emissão</th><th>Status</th><th>Valor</th></tr></thead><tbody>${os.map(o => `<tr><td>${esc(o.numero_os)}</td><td>${esc(cm[o.id_cliente] || '—')}</td><td>${fD(o.data_emissao)}</td><td><span class="${bc(o.status)}">${o.status}</span></td><td>${R$(o.valor_final)}</td></tr>`).join('')}</tbody></table>`;
+    } else if (t === 'financeiro') {
+        const b = os.reduce((s, o) => s + (o.total || 0), 0);
+        const p = os.filter(o => o.status === 'Paga').reduce((s, o) => s + (o.valor_final || 0), 0);
+        const pe = os.filter(o => o.status !== 'Paga').reduce((s, o) => s + (o.valor_final || 0), 0);
+        h = `<div class="stats-grid">${[{v:R$(b),l:'Total Bruto',c:'blue'},{v:R$(p),l:'Total Recebido',c:'green'},{v:R$(pe),l:'Total Pendente',c:'red'}].map(s => `<div class="stat-card ${s.c}"><div><h3>${s.v}</h3><p>${s.l}</p></div></div>`).join('')}</div>`;
+    }
+    $('relR').innerHTML = h;
+}
+
+// ==========================================
+// CONFIGURAÇÕES, LOGS E DASHBOARD
+// ==========================================
+function ldCfg(){
+    const c = JSON.parse(localStorage.getItem('sg_cfg') || '{}');
+    $('cfgE').value = c.empresa || 'Minha Empresa de TI';
+    $('cfgT').value = c.telefone || '';
+    $('cfgW').value = c.whatsapp || '';
+    $('cfgM').value = c.email || '';
+    $('cfgC').value = c.cnpj || '';
+    $('cfgEn').value = c.endereco || '';
+    $('sbTitle').textContent = (c.empresa || 'Gestão TI').slice(0,18);
+    $('loginTitle').textContent = c.empresa || 'Sistema de Gestão';
+    if (c.logo) $('cfgLP').innerHTML = `<img src="${c.logo}">`;
+}
+
+function saveCfg(){
+    const c = {
+        empresa: $('cfgE').value.trim(),
+        telefone: $('cfgT').value.trim(),
+        whatsapp: $('cfgW').value.trim(),
+        email: $('cfgM').value.trim(),
+        cnpj: $('cfgC').value.trim(),
+        endereco: $('cfgEn').value.trim(),
+        prefixo: $('cfgPx').value.trim() || 'OS',
+        logo: JSON.parse(localStorage.getItem('sg_cfg') || '{}').logo || ''
+    };
+    localStorage.setItem('sg_cfg', JSON.stringify(c));
+    toast('Configurações salvas!', 'success');
+    ldCfg();
+}
+
+function prevLogo(i){
+    if (!i.files[0]) return;
+    const r = new FileReader();
+    r.onload = e => {
+        const c = JSON.parse(localStorage.getItem('sg_cfg') || '{}');
+        c.logo = e.target.result;
+        localStorage.setItem('sg_cfg', JSON.stringify(c));
+        $('cfgLP').innerHTML = `<img src="${e.target.result}">`;
+        toast('Logo salva!', 'success');
+    };
+    r.readAsDataURL(i.files[0]);
+}
+
+function setTh(t){ document.documentElement.setAttribute('data-theme', t); }
+
+function fSel(id, items, vk, lk, sel=''){
+    const el = $(id);
+    el.innerHTML = '<option value="">Selecione...</option>';
+    items.forEach(i => {
+        const o = document.createElement('option');
+        o.value = i[vk];
+        o.textContent = typeof lk === 'function' ? lk(i) : i[lk];
+        if (i[vk] === sel) o.selected = true;
+        el.appendChild(o);
     });
 }
 
-function salvarChavesManuais() {
-    const u = $('cfgUrl').value.trim();
-    const k = $('cfgKey').value.trim();
-    localStorage.setItem('cfg_supa_url', u);
-    localStorage.setItem('cfg_supa_key', k);
-    SUPA_URL = u;
-    SUPA_KEY = k;
-    toast('Chaves salvas! Conexão ativa.', 'success');
-}
-
-// DASHBOARD
 async function uDash(){
     const os = await DB.select('tbl_os');
+    const cli = await DB.select('tbl_clientes');
+    const eq = await DB.select('tbl_equipamentos');
+    
     $('qaG').innerHTML = [
         { i: '📋', l: 'Nova OS', f: 'openOSM()' },
         { i: '👤', l: 'Novo Cliente', f: 'openCliM()' },
-        { i: '💻', l: 'Novo Equip.', f: 'openEqM()' }
+        { i: '💻', l: 'Novo Equip.', f: 'openEqM()' },
+        { i: '📈', l: 'Relatórios', f: "nav('relatorios')" }
     ].map(a => `<div class="qa" onclick="${a.f}"><div class="qi">${a.i}</div><div class="ql">${a.l}</div></div>`).join('');
     
     const fat = os.filter(o => o.status === 'Paga').reduce((s, o) => s + (o.valor_final || 0), 0);
@@ -679,9 +1144,20 @@ function uAll(){
     rSvc();
     rOS();
     rEq();
+    rMn();
 }
 
-$('cfgKey').value = SUPA_KEY;
+function doBk(){
+    const tables = ['tbl_clientes','tbl_servicos','tbl_os','tbl_equipamentos','tbl_manutencoes'];
+    const d = {};
+    tables.forEach(t => d[t] = JSON.parse(localStorage.getItem(t) || '[]'));
+    const b = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = `backup_${td()}.json`;
+    a.click();
+    toast('Backup baixado!', 'success');
+}
 </script>
 </body>
 </html>
